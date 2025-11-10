@@ -1,0 +1,24 @@
+package br.com.senac.ado.zoologico.entity;
+
+import jakarta.persistence.*;
+import lombok.*;
+
+import java.util.Set;
+import java.util.UUID;
+
+@Entity
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class Veterinario {
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
+    @Column(nullable = false, unique = true, columnDefinition = "BINARY(16)")
+    private UUID id;
+    private String nome;
+    private String crmv;
+    private String especialidade;
+
+    @OneToMany(mappedBy = "veterinario")
+    private Set<ConsultaVeterinaria> consultas;
+}

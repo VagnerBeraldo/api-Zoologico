@@ -2,41 +2,39 @@ package br.com.senac.ado.zoologico.service;
 
 import br.com.senac.ado.zoologico.entity.Especie;
 import br.com.senac.ado.zoologico.repository.EspecieRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
 
 @Service
+@RequiredArgsConstructor
 public class EspecieService {
 
-    private final EspecieRepository repo;
-
-    public EspecieService(EspecieRepository repo) {
-        this.repo = repo;
-    }
+    private final EspecieRepository repository;
 
     public List<Especie> listarTodos() {
-        return repo.findAll();
+        return repository.findAll();
     }
 
     public Especie buscar(UUID id) {
-        return repo.findById(id).orElse(null);
+        return repository.findById(id).orElse(null);
     }
 
     public Especie salvar(Especie especie) {
-        return repo.save(especie);
+        return repository.save(especie);
     }
 
     public Especie atualizar(UUID id, Especie especie) {
-        Especie existente = repo.findById(id)
+        Especie existente = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Espécie não encontrada"));
         existente.setNomeCientifico(especie.getNomeCientifico());
         existente.setNomeComum(especie.getNomeComum());
-        return repo.save(existente);
+        return repository.save(existente);
     }
 
     public void excluir(UUID id) {
-        repo.deleteById(id);
+        repository.deleteById(id);
     }
 }

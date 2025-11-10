@@ -3,6 +3,7 @@ package br.com.senac.ado.zoologico.controller;
 import br.com.senac.ado.zoologico.dto.HabitatDTO;
 import br.com.senac.ado.zoologico.entity.Habitat;
 import br.com.senac.ado.zoologico.service.HabitatService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -10,13 +11,10 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/habitats")
+@RequiredArgsConstructor
 public class HabitatController {
 
     private final HabitatService service;
-
-    public HabitatController(HabitatService service) {
-        this.service = service;
-    }
 
     @GetMapping
     public List<Habitat> listar() {

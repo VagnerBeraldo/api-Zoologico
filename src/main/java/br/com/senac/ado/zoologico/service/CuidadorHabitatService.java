@@ -7,31 +7,26 @@ import br.com.senac.ado.zoologico.entity.Habitat;
 import br.com.senac.ado.zoologico.repository.CuidadorHabitatRepository;
 import br.com.senac.ado.zoologico.repository.TratadorRepository;
 import br.com.senac.ado.zoologico.repository.HabitatRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.UUID;
 
 @Service
+@RequiredArgsConstructor
 public class CuidadorHabitatService {
 
-    private final CuidadorHabitatRepository repo;
+    private final CuidadorHabitatRepository repository;
     private final TratadorRepository tratadorRepo;
     private final HabitatRepository habitatRepo;
 
-    public CuidadorHabitatService(CuidadorHabitatRepository repo,
-                                  TratadorRepository tratadorRepo,
-                                  HabitatRepository habitatRepo) {
-        this.repo = repo;
-        this.tratadorRepo = tratadorRepo;
-        this.habitatRepo = habitatRepo;
-    }
 
     public List<CuidadorHabitat> listarTodos() {
-        return repo.findAll();
+        return repository.findAll();
     }
 
     public CuidadorHabitat buscar(UUID id) {
-        return repo.findById(id)
+        return repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Associação Cuidador-Habitat não encontrada"));
     }
 
@@ -47,19 +42,19 @@ public class CuidadorHabitatService {
         registro.setHabitat(habitat);
         registro.setTurno(dto.getTurno());
 
-        return repo.save(registro);
+        return repository.save(registro);
     }
 
     public CuidadorHabitat atualizar(UUID id, CuidadorHabitatDTO dto) {
         CuidadorHabitat existente = buscar(id);
         existente.setTurno(dto.getTurno());
-        return repo.save(existente);
+        return repository.save(existente);
     }
 
     public void remover(UUID id) {
-        if (!repo.existsById(id)) {
+        if (!repository.existsById(id)) {
             throw new RuntimeException("Associação Cuidador-Habitat não encontrada");
         }
-        repo.deleteById(id);
+        repository.deleteById(id);
     }
 }

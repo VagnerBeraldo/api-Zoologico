@@ -3,6 +3,7 @@ package br.com.senac.ado.zoologico.controller;
 import br.com.senac.ado.zoologico.dto.EventoZoologicoDTO;
 import br.com.senac.ado.zoologico.entity.EventoZoologico;
 import br.com.senac.ado.zoologico.service.EventoZoologicoService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -11,13 +12,11 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/eventos")
+@RequiredArgsConstructor
 public class EventoZoologicoController {
 
     private final EventoZoologicoService service;
 
-    public EventoZoologicoController(EventoZoologicoService service) {
-        this.service = service;
-    }
 
     @GetMapping
     public List<EventoZoologico> listar() {

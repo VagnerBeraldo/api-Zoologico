@@ -5,6 +5,7 @@ import br.com.senac.ado.zoologico.entity.Bilhete;
 import br.com.senac.ado.zoologico.entity.EventoZoologico;
 import br.com.senac.ado.zoologico.repository.BilheteRepository;
 import br.com.senac.ado.zoologico.repository.EventoZoologicoRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,22 +15,18 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class BilheteService {
 
-    private final BilheteRepository bilheteRepo;
+    private final BilheteRepository repository;
     private final EventoZoologicoRepository eventoRepo;
 
-    public BilheteService(BilheteRepository bilheteRepo, EventoZoologicoRepository eventoRepo) {
-        this.bilheteRepo = bilheteRepo;
-        this.eventoRepo = eventoRepo;
-    }
-
     public List<Bilhete> listar() {
-        return bilheteRepo.findAll();
+        return repository.findAll();
     }
 
     public Bilhete buscar(UUID id) {
-        return bilheteRepo.findById(id)
+        return repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Bilhete não encontrado: " + id));
     }
 
@@ -38,7 +35,7 @@ public class BilheteService {
         EventoZoologico evento = eventoRepo.findById(dto.getEventoId())
                 .orElseThrow(() -> new RuntimeException("Evento não encontrado"));
 
-        long vendidos = bilheteRepo.findAll().stream()
+        long vendidos = repository.findAll().stream()
                 .filter(b -> b.getEvento().getId().equals(evento.getId()))
                 .count();
 
@@ -52,11 +49,11 @@ public class BilheteService {
         bilhete.setValor(dto.getValor());
         bilhete.setEvento(evento);
 
-        return bilheteRepo.save(bilhete);
+        return repository.save(bilhete);
     }
 
     public Bilhete atualizar(UUID id, BilheteDTO dto) {
-        Bilhete existente = bilheteRepo.findById(id)
+        Bilhete existente = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Bilhete não encontrado: " + id));
 
         existente.setComprador(dto.getComprador());
@@ -69,15 +66,15 @@ public class BilheteService {
             existente.setEvento(evento);
         }
 
-        return bilheteRepo.save(existente);
+        return repository.save(existente);
     }
 
     public void excluir(UUID id) {
-        bilheteRepo.deleteById(id);
+        repository.deleteById(id);
     }
 
     public Map<String, Long> totalBilhetesPorEvento() {
-        return bilheteRepo.findAll().stream()
+        return repository.findAll().stream()
                 .collect(Collectors.groupingBy(
                         b -> b.getEvento().getTitulo(),
                         Collectors.counting()

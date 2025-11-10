@@ -3,6 +3,7 @@ package br.com.senac.ado.zoologico.controller;
 import br.com.senac.ado.zoologico.dto.BilheteDTO;
 import br.com.senac.ado.zoologico.entity.Bilhete;
 import br.com.senac.ado.zoologico.service.BilheteService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -11,13 +12,11 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/bilhetes")
+@RequiredArgsConstructor
 public class BilheteController {
 
     private final BilheteService service;
 
-    public BilheteController(BilheteService service) {
-        this.service = service;
-    }
 
     @GetMapping
     public List<Bilhete> listar() {

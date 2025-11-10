@@ -3,6 +3,7 @@ package br.com.senac.ado.zoologico.controller;
 import br.com.senac.ado.zoologico.dto.VeterinarioDTO;
 import br.com.senac.ado.zoologico.entity.Veterinario;
 import br.com.senac.ado.zoologico.service.VeterinarioService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -10,13 +11,10 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/veterinarios")
+@RequiredArgsConstructor
 public class VeterinarioController {
 
     private final VeterinarioService service;
-
-    public VeterinarioController(VeterinarioService service) {
-        this.service = service;
-    }
 
     @GetMapping
     public List<Veterinario> listar() {

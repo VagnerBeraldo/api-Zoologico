@@ -7,6 +7,7 @@ import br.com.senac.ado.zoologico.entity.Habitat;
 import br.com.senac.ado.zoologico.repository.EspecieRepository;
 import br.com.senac.ado.zoologico.repository.HabitatRepository;
 import br.com.senac.ado.zoologico.service.AnimalService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,17 +16,14 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/animais")
+@RequiredArgsConstructor
 public class AnimalController {
 
     private final AnimalService service;
     private final EspecieRepository especieRepo;
     private final HabitatRepository habitatRepo;
 
-    public AnimalController(AnimalService service, EspecieRepository especieRepo, HabitatRepository habitatRepo) {
-        this.service = service;
-        this.especieRepo = especieRepo;
-        this.habitatRepo = habitatRepo;
-    }
+
 
     @GetMapping
     public List<Animal> listar(@RequestParam(required = false) String especie,

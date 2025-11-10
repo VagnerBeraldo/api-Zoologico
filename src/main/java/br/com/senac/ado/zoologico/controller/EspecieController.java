@@ -3,6 +3,7 @@ package br.com.senac.ado.zoologico.controller;
 import br.com.senac.ado.zoologico.dto.EspecieDTO;
 import br.com.senac.ado.zoologico.entity.Especie;
 import br.com.senac.ado.zoologico.service.EspecieService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -10,13 +11,10 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/especies")
+@RequiredArgsConstructor
 public class EspecieController {
 
     private final EspecieService service;
-
-    public EspecieController(EspecieService service) {
-        this.service = service;
-    }
 
     @GetMapping
     public List<Especie> listar() {

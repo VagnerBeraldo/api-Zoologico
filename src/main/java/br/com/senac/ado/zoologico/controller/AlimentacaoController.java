@@ -3,6 +3,7 @@ package br.com.senac.ado.zoologico.controller;
 import br.com.senac.ado.zoologico.dto.AlimentacaoDTO;
 import br.com.senac.ado.zoologico.entity.Alimentacao;
 import br.com.senac.ado.zoologico.service.AlimentacaoService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -11,13 +12,11 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/alimentacoes")
+@RequiredArgsConstructor
 public class AlimentacaoController {
 
     private final AlimentacaoService service;
 
-    public AlimentacaoController(AlimentacaoService service) {
-        this.service = service;
-    }
 
     @GetMapping
     public List<Alimentacao> listar() {

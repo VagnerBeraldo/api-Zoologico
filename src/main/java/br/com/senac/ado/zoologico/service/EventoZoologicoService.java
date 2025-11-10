@@ -2,44 +2,43 @@ package br.com.senac.ado.zoologico.service;
 
 import br.com.senac.ado.zoologico.entity.EventoZoologico;
 import br.com.senac.ado.zoologico.repository.EventoZoologicoRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
 
 @Service
+@RequiredArgsConstructor
 public class EventoZoologicoService {
 
-    private final EventoZoologicoRepository repo;
+    private final EventoZoologicoRepository repository;
 
-    public EventoZoologicoService(EventoZoologicoRepository repo) {
-        this.repo = repo;
-    }
 
     public List<EventoZoologico> listarTodos() {
-        return repo.findAll();
+        return repository.findAll();
     }
 
     public EventoZoologico buscar(UUID id) {
-        return repo.findById(id).orElse(null);
+        return repository.findById(id).orElse(null);
     }
 
     public EventoZoologico salvar(EventoZoologico evento) {
-        return repo.save(evento);
+        return repository.save(evento);
     }
 
     public EventoZoologico atualizar(UUID id, EventoZoologico evento) {
-        EventoZoologico existente = repo.findById(id)
+        EventoZoologico existente = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Evento não encontrado"));
         existente.setTitulo(evento.getTitulo());
         existente.setData(evento.getData());
         existente.setCapacidade(evento.getCapacidade());
         existente.setDescricao(evento.getDescricao());
-        return repo.save(existente);
+        return repository.save(existente);
     }
 
     public void excluir(UUID id) {
-        repo.deleteById(id);
+        repository.deleteById(id);
     }
 }
 

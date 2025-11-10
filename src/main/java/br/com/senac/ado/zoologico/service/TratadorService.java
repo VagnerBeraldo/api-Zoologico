@@ -2,42 +2,40 @@ package br.com.senac.ado.zoologico.service;
 
 import br.com.senac.ado.zoologico.entity.Tratador;
 import br.com.senac.ado.zoologico.repository.TratadorRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
 
 @Service
+@RequiredArgsConstructor
 public class TratadorService {
 
-    private final TratadorRepository repo;
-
-    public TratadorService(TratadorRepository repo) {
-        this.repo = repo;
-    }
+    private final TratadorRepository repository;
 
     public List<Tratador> listarTodos() {
-        return repo.findAll();
+        return repository.findAll();
     }
 
     public Tratador buscar(UUID id) {
-        return repo.findById(id).orElse(null);
+        return repository.findById(id).orElse(null);
     }
 
     public Tratador salvar(Tratador tratador) {
-        return repo.save(tratador);
+        return repository.save(tratador);
     }
 
     public Tratador atualizar(UUID id, Tratador tratador) {
-        Tratador existente = repo.findById(id)
+        Tratador existente = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Tratador não encontrado"));
         existente.setNome(tratador.getNome());
         existente.setCpf(tratador.getCpf());
         existente.setTelefone(tratador.getTelefone());
-        return repo.save(existente);
+        return repository.save(existente);
     }
 
     public void excluir(UUID id) {
-        repo.deleteById(id);
+        repository.deleteById(id);
     }
 }

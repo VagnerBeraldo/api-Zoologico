@@ -8,33 +8,28 @@ import br.com.senac.ado.zoologico.entity.Tratador;
 import br.com.senac.ado.zoologico.repository.AlimentacaoRepository;
 import br.com.senac.ado.zoologico.repository.AnimalRepository;
 import br.com.senac.ado.zoologico.repository.TratadorRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class AlimentacaoService {
 
-    private final AlimentacaoRepository repo;
+    private final AlimentacaoRepository repository;
     private final AnimalRepository animalRepo;
     private final TratadorRepository tratadorRepo;
 
-    public AlimentacaoService(AlimentacaoRepository repo, AnimalRepository animalRepo, TratadorRepository tratadorRepo) {
-        this.repo = repo;
-        this.animalRepo = animalRepo;
-        this.tratadorRepo = tratadorRepo;
-    }
-
     public List<Alimentacao> listarTodas() {
-        return repo.findAll();
+        return repository.findAll();
     }
 
     public List<Alimentacao> listarPorAnimal(UUID animalId) {
-        return repo.findAll().stream()
+        return repository.findAll().stream()
                 .filter(a -> a.getAnimal().getId().equals(animalId))
                 .toList();
     }
@@ -62,31 +57,31 @@ public class AlimentacaoService {
             alimentacao.setTratador(tratador);
         }
 
-        return repo.save(alimentacao);
+        return repository.save(alimentacao);
     }
 
     public Alimentacao atualizar(UUID animalId, UUID tratadorId, String data, AlimentacaoDTO dto) {
         LocalDate dataRef = LocalDate.parse(data);
         AlimentacaoId id = new AlimentacaoId(animalId, tratadorId, dataRef);
 
-        Alimentacao existente = repo.findById(id)
+        Alimentacao existente = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Registro de alimentação não encontrado"));
 
         existente.setTipoRacao(dto.getTipoRacao());
         existente.setQuantidadeKg(dto.getQuantidadeKg());
         existente.setHorario(dto.getHorario());
 
-        return repo.save(existente);
+        return repository.save(existente);
     }
 
     public void deletar(UUID animalId, UUID tratadorId, String data) {
         LocalDate dataRef = LocalDate.parse(data);
         AlimentacaoId id = new AlimentacaoId(animalId, tratadorId, dataRef);
-        repo.deleteById(id);
+        repository.deleteById(id);
     }
 
     public Double calcularMediaQuantidade() {
-        return repo.findAll().stream()
+        return repository.findAll().stream()
                 .collect(Collectors.averagingDouble(Alimentacao::getQuantidadeKg));
     }
 

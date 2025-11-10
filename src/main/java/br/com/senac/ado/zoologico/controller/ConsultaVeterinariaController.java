@@ -7,6 +7,7 @@ import br.com.senac.ado.zoologico.entity.Veterinario;
 import br.com.senac.ado.zoologico.repository.AnimalRepository;
 import br.com.senac.ado.zoologico.repository.VeterinarioRepository;
 import br.com.senac.ado.zoologico.service.ConsultaVeterinariaService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,17 +15,12 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/consultas")
+@RequiredArgsConstructor
 public class ConsultaVeterinariaController {
 
     private final ConsultaVeterinariaService service;
     private final AnimalRepository animalRepo;
     private final VeterinarioRepository vetRepo;
-
-    public ConsultaVeterinariaController(ConsultaVeterinariaService service, AnimalRepository animalRepo, VeterinarioRepository vetRepo) {
-        this.service = service;
-        this.animalRepo = animalRepo;
-        this.vetRepo = vetRepo;
-    }
 
     @GetMapping
     public List<ConsultaVeterinaria> listar() {

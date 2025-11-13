@@ -6,8 +6,8 @@ import java.util.UUID;
 
 @Data
 public class BilheteDTO {
-    private String comprador;
-    private LocalDateTime dataCompra;
-    private Double valor;
-    private UUID eventoId;
+     String comprador;
+     LocalDateTime dataCompra;
+     Double valor;
+     UUID eventoId;
 }

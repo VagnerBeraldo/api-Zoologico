@@ -8,8 +8,11 @@ import br.com.senac.ado.zoologico.repository.AnimalRepository;
 import br.com.senac.ado.zoologico.repository.VeterinarioRepository;
 import br.com.senac.ado.zoologico.service.ConsultaVeterinariaService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
@@ -68,4 +71,30 @@ public class ConsultaVeterinariaController {
     public void excluir(@PathVariable UUID id) {
         service.excluir(id);
     }
+
+    /**
+     * Endpoint para buscar consultas com múltiplos critérios e filtros compostos.
+     * Combina: (Especialidade DO VETERINÁRIO AND (É URGENTE OR Data >= Data Mínima))
+     * * @param especialidade A especialidade do veterinário (ex: "Cirurgia"). OBRIGATÓRIO.
+     * @param urgente Se a consulta foi marcada como urgente (true/false). OBRIGATÓRIO.
+     * @param dataMin Data mínima para a consulta, no formato YYYY-MM-DD. OBRIGATÓRIO.
+     * @return Lista de ConsultasVeterinarias que atendem aos critérios.
+     */
+    @GetMapping("/busca-composta")
+    public ResponseEntity<List<ConsultaVeterinaria>> buscarPorFiltros(
+            @RequestParam("especialidade") String especialidade,
+            @RequestParam("urgente") Boolean urgente,
+            @RequestParam("dataMin") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dataMin) {
+
+        List<ConsultaVeterinaria> consultas =
+                service.buscarPorFiltros(especialidade, urgente, dataMin);
+
+        if (consultas.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+
+        return ResponseEntity.ok(consultas);
+    }
+
+
 }

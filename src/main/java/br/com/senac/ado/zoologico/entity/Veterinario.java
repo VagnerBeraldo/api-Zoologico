@@ -3,6 +3,7 @@ package br.com.senac.ado.zoologico.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -20,5 +21,5 @@ public class Veterinario {
     private String especialidade;
 
     @OneToMany(mappedBy = "veterinario")
-    private Set<ConsultaVeterinaria> consultas;
+    private List<ConsultaVeterinaria> consultas;
 }

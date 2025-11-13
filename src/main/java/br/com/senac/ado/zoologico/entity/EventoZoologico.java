@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -29,9 +30,9 @@ public class EventoZoologico {
             joinColumns = @JoinColumn(name = "evento_id"),
             inverseJoinColumns = @JoinColumn(name = "animal_id"))
     @JsonManagedReference
-    private Set<Animal> animais;
+    private List<Animal> animais;
 
     @OneToMany(mappedBy = "evento", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
-    private Set<Bilhete> bilhetes;
+    private List<Bilhete> bilhetes;
 }

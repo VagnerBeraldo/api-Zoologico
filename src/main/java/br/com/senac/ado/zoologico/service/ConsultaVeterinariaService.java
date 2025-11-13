@@ -4,10 +4,13 @@ import br.com.senac.ado.zoologico.entity.ConsultaVeterinaria;
 import br.com.senac.ado.zoologico.entity.Animal;
 import br.com.senac.ado.zoologico.repository.ConsultaVeterinariaRepository;
 import br.com.senac.ado.zoologico.repository.AnimalRepository;
+import br.com.senac.ado.zoologico.repository.specifications.ConsultaSpecifications;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
@@ -17,6 +20,22 @@ public class ConsultaVeterinariaService {
 
     private final ConsultaVeterinariaRepository repository;
     private final AnimalRepository animalRepo;
+
+
+    public List<ConsultaVeterinaria> buscarPorFiltros(
+            String especialidade, Boolean urgente, LocalDate dataMin){
+
+        // Exemplo de chamada: Buscar consultas de "Cirurgia" E (urgentes OU a partir de hoje)
+        Specification<ConsultaVeterinaria> spec =
+                ConsultaSpecifications.buscarConsultasCompostas(especialidade, urgente, dataMin);
+
+        return repository.findAll(spec);
+    }
+
+
+
+
+
 
     public List<ConsultaVeterinaria> listarTodos() {
         return repository.findAll();

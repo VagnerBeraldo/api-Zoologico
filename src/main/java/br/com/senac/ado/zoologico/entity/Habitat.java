@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -49,10 +51,10 @@ public class Habitat {
 
     @OneToMany(mappedBy = "habitat", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnoreProperties("habitat")
-    private Set<Animal> animais;
+    private List<Animal> animais;
 
     @OneToMany(mappedBy = "habitat", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnoreProperties("habitat")
-    private Set<CuidadorHabitat> cuidadores;
+    private List<CuidadorHabitat> cuidadores;
 }
 

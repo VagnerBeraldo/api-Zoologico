@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -25,11 +27,11 @@ public class Tratador {
 
     @ManyToMany(mappedBy = "tratadores")
     @JsonBackReference("animal-tratadores")
-    private Set<Animal> animais;
+    private List<Animal> animais;
 
     @OneToMany(mappedBy = "tratador", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
-    private Set<CuidadorHabitat> habitatsResponsaveis;
+    private List<CuidadorHabitat> habitatsResponsaveis;
 
 
 }

@@ -3,6 +3,8 @@ package br.com.senac.ado.zoologico.entity;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -23,5 +25,5 @@ public class Especie {
 
     @OneToMany(mappedBy = "especie")
     @JsonManagedReference("especie-animais")
-    private Set<Animal> animais;
+    private List<Animal> animais;
 }

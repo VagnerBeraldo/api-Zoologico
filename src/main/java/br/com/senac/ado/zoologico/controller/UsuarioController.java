@@ -14,7 +14,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/api/usuarios")
 @RequiredArgsConstructor
-public class UsuarioController implements GenericController {
+public class UsuarioController{
 
     private final UsuarioService service;
 

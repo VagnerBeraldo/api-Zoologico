@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -78,11 +79,11 @@ import java.util.UUID;
                 joinColumns = @JoinColumn(name = "animal_id"),
                 inverseJoinColumns = @JoinColumn(name = "tratador_id"))
         @JsonIgnoreProperties("animais")
-        private Set<Tratador> tratadores;
+        private List<Tratador> tratadores;
 
         @OneToMany(mappedBy = "animal", cascade = CascadeType.ALL, orphanRemoval = true)
         @JsonIgnoreProperties("animal")
-        private Set<ConsultaVeterinaria> consultas;
+        private List<ConsultaVeterinaria> consultas;
 
     }
 

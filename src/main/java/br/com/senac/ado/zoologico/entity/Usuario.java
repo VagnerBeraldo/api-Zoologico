@@ -12,11 +12,14 @@ public class Usuario {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(nullable = false, unique = true, columnDefinition = "BINARY(16)")
+    @Column(columnDefinition = "BINARY(16)")
     private UUID id;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String username;
+
+    @Column(nullable = false, unique = true)
+    private String email;
 
     @Column(nullable = false)
     private String senha;

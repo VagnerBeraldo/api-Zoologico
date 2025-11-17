@@ -1,4 +1,4 @@
-package br.com.senac.ado.zoologico.report.consulta;
+package br.com.senac.ado.zoologico.service;
 
 import br.com.senac.ado.zoologico.repository.ConsultaVeterinariaRepository;
 import org.springframework.stereotype.Service;

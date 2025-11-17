@@ -5,8 +5,10 @@ import br.com.senac.ado.zoologico.entity.Usuario;
 import br.com.senac.ado.zoologico.service.UsuarioService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -14,44 +16,55 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/api/usuarios")
 @RequiredArgsConstructor
-public class UsuarioController{
+public class UsuarioController implements GenericController{
+
+    private static final String BASE_PATH = "/api/usuarios";
 
     private final UsuarioService service;
 
     @GetMapping
-    public List<Usuario> listar() {
-        return service.listarTodos();
+    public ResponseEntity<List<Usuario>> listAll() {
+        return ResponseEntity.ok(service.getAll());
     }
 
     @GetMapping("/{id}")
-    public Usuario buscarPorId(@PathVariable UUID id) {
-        return service.buscar(id);
+    public ResponseEntity<Usuario> findById(@PathVariable UUID id) {
+        var usuario =  service.findById(id);
+        if (usuario == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(usuario);
     }
 
     @PostMapping("/registrar")
-    public Map<String, String> registrar(@RequestBody @Valid UsuarioDTO dto) {
-
-        service.registrar(dto);
-        return Map.of("mensagem", "Usuário registrado com sucesso!");
+    public ResponseEntity<Void> save(@RequestBody @Valid UsuarioDTO request) {
+        UUID idGerado = service.save(request);
+        URI location = gerarHeaderLocation(BASE_PATH,idGerado);
+        return ResponseEntity.created(location).build();
     }
 
-    @PostMapping("/login")
-    public Map<String, String> login(@RequestBody UsuarioDTO dto) {
-        boolean ok = service.autenticar(dto.getUsername(), dto.getSenha());
-        return Map.of("mensagem", ok ? "Login realizado com sucesso!" : "Usuário ou senha incorretos!");
-    }
+//    @PostMapping("/login")
+//    public Map<String, String> login(@RequestBody UsuarioDTO dto) {
+//        boolean ok = service.autenticar(dto.getEmail(), dto.getSenha());
+//        return Map.of("mensagem", ok ? "Login realizado com sucesso!" : "Usuário ou senha incorretos!");
+//    }
 
     @PutMapping("/{id}")
-    public Usuario atualizar(@PathVariable UUID id, @RequestBody UsuarioDTO dto) {
+    public ResponseEntity<Void> update(@PathVariable UUID id, @RequestBody @Valid UsuarioDTO dto) {
+
         Usuario user = new Usuario();
         user.setUsername(dto.getUsername());
+        user.setEmail(dto.getEmail());
         user.setSenha(dto.getSenha());
         user.setPapel(dto.getPapel());
-        return service.atualizar(id, user);
+
+        service.update(id, user);
+        return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("/{id}")
-    public void deletar(@PathVariable UUID id) {
-        service.excluir(id);
+    public ResponseEntity<Void> delete(@PathVariable UUID id) {
+        service.deleteById(id);
+        return ResponseEntity.noContent().build();
     }
 }

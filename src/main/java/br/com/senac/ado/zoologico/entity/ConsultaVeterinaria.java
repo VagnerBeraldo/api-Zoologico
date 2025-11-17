@@ -14,7 +14,7 @@ public class ConsultaVeterinaria {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(nullable = false, unique = true, columnDefinition = "BINARY(16)")
+    @Column(columnDefinition = "BINARY(16)")
     private UUID id;
 
     private LocalDate dataConsulta;

@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -20,6 +21,16 @@ public class BilheteService {
 
     private final BilheteRepository repository;
     private final EventoZoologicoRepository eventoRepo;
+
+
+    public Bilhete saveBilhete(BilheteDTO dto, EventoZoologico evento) {
+        Bilhete novoBilhete = new Bilhete();
+        novoBilhete.setComprador(dto.getComprador());
+        novoBilhete.setDataCompra(LocalDateTime.now());
+        novoBilhete.setValor(dto.getValor());
+        novoBilhete.setEvento(evento);
+        return novoBilhete;
+    }
 
     public List<Bilhete> listar() {
         return repository.findAll();

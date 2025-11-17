@@ -1,6 +1,8 @@
 package br.com.senac.ado.zoologico.service;
 
+import br.com.senac.ado.zoologico.dto.TratadorDTO;
 import br.com.senac.ado.zoologico.entity.Tratador;
+import br.com.senac.ado.zoologico.exception.ResourceNotFoundException;
 import br.com.senac.ado.zoologico.repository.TratadorRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -14,28 +16,38 @@ public class TratadorService {
 
     private final TratadorRepository repository;
 
-    public List<Tratador> listarTodos() {
+    public List<Tratador> getAll() {
         return repository.findAll();
     }
 
-    public Tratador buscar(UUID id) {
-        return repository.findById(id).orElse(null);
+    public Tratador findById(UUID id) {
+        return repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Recurso não Encontrado com o ID informado"));
     }
 
-    public Tratador salvar(Tratador tratador) {
-        return repository.save(tratador);
+    public UUID save(TratadorDTO dto) {
+
+        Tratador tratador = new Tratador();
+        tratador.setNome(dto.getNome());
+        tratador.setCpf(dto.getCpf());
+        tratador.setTelefone(dto.getTelefone());
+
+        return repository.save(tratador).getId();
     }
 
-    public Tratador atualizar(UUID id, Tratador tratador) {
+    public void update(UUID id, Tratador tratador) {
+
         Tratador existente = repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Tratador não encontrado"));
+                .orElseThrow(() -> new ResourceNotFoundException("Recurso não Encontrado com o ID informado"));
         existente.setNome(tratador.getNome());
         existente.setCpf(tratador.getCpf());
         existente.setTelefone(tratador.getTelefone());
-        return repository.save(existente);
+        repository.save(existente);
     }
 
-    public void excluir(UUID id) {
+    public void delete(UUID id) {
+        if (!repository.existsById(id)){
+            throw new ResourceNotFoundException("Recurso não Encontrado com o ID informado");
+        }
         repository.deleteById(id);
     }
 }

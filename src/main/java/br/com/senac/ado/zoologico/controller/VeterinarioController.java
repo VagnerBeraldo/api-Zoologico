@@ -4,48 +4,48 @@ import br.com.senac.ado.zoologico.dto.VeterinarioDTO;
 import br.com.senac.ado.zoologico.entity.Veterinario;
 import br.com.senac.ado.zoologico.service.VeterinarioService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
 import java.util.List;
 import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/veterinarios")
 @RequiredArgsConstructor
-public class VeterinarioController {
+public class VeterinarioController implements GenericController {
+
+    private static final String BASE_PATH = "/api/veterinarios";
 
     private final VeterinarioService service;
 
     @GetMapping
-    public List<Veterinario> listar() {
-        return service.listarTodos();
+    public ResponseEntity<List<Veterinario>> getAll() {
+        return ResponseEntity.ok(service.getAll());
     }
 
     @GetMapping("/{id}")
-    public Veterinario buscarPorId(@PathVariable UUID id) {
-        return service.buscar(id);
+    public ResponseEntity<Veterinario> findById(@PathVariable UUID id) {
+        return ResponseEntity.ok(service.findById(id));
     }
 
     @PostMapping
-    public Veterinario criar(@RequestBody VeterinarioDTO dto) {
-        Veterinario veterinario = new Veterinario();
-        veterinario.setNome(dto.getNome());
-        veterinario.setCrmv(dto.getCrmv());
-        veterinario.setEspecialidade(dto.getEspecialidade());
-        return service.salvar(veterinario);
+    public ResponseEntity<Void> save(@RequestBody VeterinarioDTO dto) {
+        var idGerado =  service.save(dto);
+        URI location = gerarHeaderLocation(BASE_PATH, idGerado);
+        return ResponseEntity.created(location).build();
     }
 
     @PutMapping("/{id}")
-    public Veterinario atualizar(@PathVariable UUID id, @RequestBody VeterinarioDTO dto) {
-        Veterinario veterinario = new Veterinario();
-        veterinario.setNome(dto.getNome());
-        veterinario.setCrmv(dto.getCrmv());
-        veterinario.setEspecialidade(dto.getEspecialidade());
-        return service.atualizar(id, veterinario);
+    public ResponseEntity<Void> update(@PathVariable UUID id, @RequestBody VeterinarioDTO dto) {
+        service.update(id, dto);
+        return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("/{id}")
-    public void deletar(@PathVariable UUID id) {
-        service.excluir(id);
+    public ResponseEntity<Void> delete(@PathVariable UUID id) {
+        service.delete(id);
+        return  ResponseEntity.noContent().build();
     }
 }

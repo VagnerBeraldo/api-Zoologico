@@ -4,48 +4,48 @@ import br.com.senac.ado.zoologico.dto.HabitatDTO;
 import br.com.senac.ado.zoologico.entity.Habitat;
 import br.com.senac.ado.zoologico.service.HabitatService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
 import java.util.List;
 import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/habitats")
 @RequiredArgsConstructor
-public class HabitatController {
+public class HabitatController implements GenericController {
+
+    private static final String BASE_PATH = "/api/habitats";
 
     private final HabitatService service;
 
     @GetMapping
-    public List<Habitat> listar() {
-        return service.listarTodos();
+    public ResponseEntity<List<Habitat>> getAll() {
+        return ResponseEntity.ok(service.getAll());
     }
 
     @GetMapping("/{id}")
-    public Habitat buscarPorId(@PathVariable UUID id) {
-        return service.buscar(id);
+    public ResponseEntity<Habitat> findById(@PathVariable UUID id) {
+        return ResponseEntity.ok(service.findById(id));
     }
 
     @PostMapping
-    public Habitat criar(@RequestBody HabitatDTO dto) {
-        Habitat habitat = new Habitat();
-        habitat.setNome(dto.getNome());
-        habitat.setTipo(dto.getTipo());
-        habitat.setAreaM2(Double.valueOf(dto.getAreaM2()));
-        return service.salvar(habitat);
+    public ResponseEntity<Void> save(@RequestBody HabitatDTO dto) {
+        var idGerado = service.salvar(dto);
+        URI location = gerarHeaderLocation(BASE_PATH, idGerado);
+        return ResponseEntity.created(location).build();
     }
 
     @PutMapping("/{id}")
-    public Habitat atualizar(@PathVariable UUID id, @RequestBody HabitatDTO dto) {
-        Habitat habitat = new Habitat();
-        habitat.setNome(dto.getNome());
-        habitat.setTipo(dto.getTipo());
-        habitat.setAreaM2(Double.valueOf(dto.getAreaM2()));
-        return service.atualizar(id, habitat);
+    public ResponseEntity<Void> update(@PathVariable UUID id, @RequestBody HabitatDTO dto) {
+      service.update(id, dto);
+      return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("/{id}")
-    public void deletar(@PathVariable UUID id) {
-        service.excluir(id);
+    public ResponseEntity<Void> delete(@PathVariable UUID id) {
+        service.delete(id);
+        return ResponseEntity.noContent().build();
     }
 }

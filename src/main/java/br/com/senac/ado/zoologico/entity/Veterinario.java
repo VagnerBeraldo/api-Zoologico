@@ -14,7 +14,7 @@ import java.util.UUID;
 public class Veterinario {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(nullable = false, unique = true, columnDefinition = "BINARY(16)")
+    @Column(columnDefinition = "BINARY(16)")
     private UUID id;
     private String nome;
     private String crmv;

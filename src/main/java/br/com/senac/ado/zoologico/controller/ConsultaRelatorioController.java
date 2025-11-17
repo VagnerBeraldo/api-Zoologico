@@ -1,5 +1,6 @@
-package br.com.senac.ado.zoologico.report.consulta;
+package br.com.senac.ado.zoologico.controller;
 
+import br.com.senac.ado.zoologico.service.ConsultaRelatorioService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

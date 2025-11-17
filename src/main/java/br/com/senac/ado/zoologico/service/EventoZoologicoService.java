@@ -1,8 +1,10 @@
 package br.com.senac.ado.zoologico.service;
 
 import br.com.senac.ado.zoologico.dto.BilheteDTO;
+import br.com.senac.ado.zoologico.dto.EventoZoologicoDTO;
 import br.com.senac.ado.zoologico.entity.Bilhete;
 import br.com.senac.ado.zoologico.entity.EventoZoologico;
+import br.com.senac.ado.zoologico.exception.ResourceNotFoundException;
 import br.com.senac.ado.zoologico.repository.BilheteRepository;
 import br.com.senac.ado.zoologico.repository.EventoZoologicoRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -10,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
@@ -23,63 +26,61 @@ public class EventoZoologicoService {
     private final BilheteRepository bilheteRepository;
 
 
+    @Transactional
+    public UUID venderBilhete(BilheteDTO dto) {
 
-    @Transactional // teste para requisito do projeto
-    public Bilhete venderBilhete(BilheteDTO dto) {
-
-        // 1. Encontrar o Evento (Operação de Leitura)
         EventoZoologico evento = repository.findById(dto.getEventoId())
                 .orElseThrow(() -> new EntityNotFoundException("Evento não encontrado."));
 
-        // 2. Validação (Garante a consistência antes da escrita)
         if (evento.getCapacidade() <= 0) {
-            // Lançar exceção faz o Spring disparar o ROLLBACK automaticamente
             throw new IllegalStateException("Evento lotado. Capacidade esgotada.");
         }
 
-        // 3. Primeira Operação de Escrita: Atualizar Capacidade (Decremento)
         evento.setCapacidade(evento.getCapacidade() - 1);
-        repository.save(evento); // O save aqui é "adiado" até o commit
 
-        // 4. Segunda Operação de Escrita: Criar o Bilhete
-        Bilhete novoBilhete = new Bilhete();
-        novoBilhete.setComprador(dto.getComprador());
-        novoBilhete.setDataCompra(LocalDateTime.now());
-        novoBilhete.setValor(dto.getValor());
-        novoBilhete.setEvento(evento);
+        Bilhete bilhete = new Bilhete();
+        bilhete.setComprador(dto.getComprador());
+        bilhete.setDataCompra(LocalDateTime.now());
+        bilhete.setValor(dto.getValor());
+        bilhete.setEvento(evento);
 
-        Bilhete bilheteSalvo = bilheteRepository.save(novoBilhete);
-
-        // 5. COMMIT implícito: Se o metodo terminar aqui sem exceção,
-        // ambas as operações (atualização do evento e criação do bilhete) são salvas.
-
-        return bilheteSalvo;
+        return bilheteRepository.save(bilhete).getId();
     }
 
 
-    public List<EventoZoologico> listarTodos() {
+    public List<EventoZoologico> getAll() {
         return repository.findAll();
     }
 
-    public EventoZoologico buscar(UUID id) {
-        return repository.findById(id).orElse(null);
+    public EventoZoologico findById(UUID id) {
+        return repository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Recurso não Encontrado com o ID informado"));
     }
 
-    public EventoZoologico salvar(EventoZoologico evento) {
-        return repository.save(evento);
+    public UUID save(EventoZoologicoDTO dto) {
+
+        EventoZoologico evento = new EventoZoologico();
+        evento.setTitulo(dto.getTitulo());
+        evento.setDescricao(dto.getDescricao());
+        evento.setData(LocalDate.from(dto.getData()));
+        evento.setCapacidade(dto.getCapacidade());
+        return repository.save(evento).getId();
     }
 
-    public EventoZoologico atualizar(UUID id, EventoZoologico evento) {
+    public void update(UUID id, EventoZoologicoDTO dto) {
         EventoZoologico existente = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Evento não encontrado"));
-        existente.setTitulo(evento.getTitulo());
-        existente.setData(evento.getData());
-        existente.setCapacidade(evento.getCapacidade());
-        existente.setDescricao(evento.getDescricao());
-        return repository.save(existente);
+        existente.setTitulo(dto.getTitulo());
+        existente.setData(LocalDate.from(dto.getData()));
+        existente.setCapacidade(dto.getCapacidade());
+        existente.setDescricao(dto.getDescricao());
+        repository.save(existente);
     }
 
-    public void excluir(UUID id) {
+    public void delete(UUID id) {
+        if (!repository.existsById(id)) {
+            throw new ResourceNotFoundException("Recurso não encontrado para exclusão");
+        }
         repository.deleteById(id);
     }
 }

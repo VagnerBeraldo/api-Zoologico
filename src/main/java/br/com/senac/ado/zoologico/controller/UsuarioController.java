@@ -29,11 +29,7 @@ public class UsuarioController implements GenericController{
 
     @GetMapping("/{id}")
     public ResponseEntity<Usuario> findById(@PathVariable UUID id) {
-        var usuario =  service.findById(id);
-        if (usuario == null) {
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok(usuario);
+        return ResponseEntity.ok(service.findById(id));
     }
 
     @PostMapping("/registrar")

@@ -16,7 +16,7 @@ A aplicação foi desenvolvida com foco em:
 <br><br>
 
 * **Segurança:** Implementação de **JSON Web Tokens (JWT)** para autenticação e autorização seguras.
-* **Boas Práticas de Código:** Utilização de **Data Transfer Objects (DTOs)** para estruturar e tipar a comunicação de dados entre as camadas da aplicação, garantindo maior clareza e manutenção.
+* **Boas Práticas de Código:** Utilização de **Data Transfer Objects (DTOs)**, **Mappers** para estruturar e tipar a comunicação de dados entre as camadas da aplicação, garantindo maior clareza e manutenção.
 
 ---
 

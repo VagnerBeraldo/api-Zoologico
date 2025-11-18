@@ -12,10 +12,8 @@ A aplicação foi desenvolvida com foco em:
 * **Modelagem de Dados Eficiente:** O banco de dados foi desenhado para representar as entidades cruciais de um zoológico, como animais, espécies, habitats, eventos, veterinários, tratadores e usuários. **A estrutura completa do nosso Schema (UML) é a base do nosso banco de dados.**
     
 <br><br>
-![Print da Tela Inicial](https://github.com/VagnerBeraldo/appSenaClick/blob/main/assets/printTelas/telasSenaclickMobile2.png)
-<br><br>
 ![Diagrama UML do Zoológico](./uml-zoo.png)
-
+<br><br>
 
 * **Segurança:** Implementação de **JSON Web Tokens (JWT)** para autenticação e autorização seguras.
 * **Boas Práticas de Código:** Utilização de **Data Transfer Objects (DTOs)** para estruturar e tipar a comunicação de dados entre as camadas da aplicação, garantindo maior clareza e manutenção.
@@ -46,46 +44,26 @@ O projeto foi configurado para utilizar o **MySQL**. Siga as instruções abaixo
 * **Criação do Schema:**
     É obrigatório criar um banco de dados com o nome exato **`zoo`**. Você pode fazer isso executando o seguinte comando SQL em seu cliente MySQL (como MySQL Workbench, DBeaver, ou linha de comando):
 
-    \`\`\`sql
-    CREATE DATABASE zoo;
-    \`\`\`
-    *Obs.: A criação das tabelas e a inserção dos dados iniciais (se houver) serão feitas automaticamente pelo Spring Boot ao rodar a aplicação, graças às configurações no `application.yml` (e, possivelmente, aos arquivos `schema.sql` e `data.sql` no diretório de recursos).*
+    * CREATE DATABASE zoo;
+    *Obs.: A criação das tabelas serão feitas automaticamente pelo Spring Boot ao rodar a aplicação*
 
 #### 2. Configuração do Projeto (`application.yml`)
 
 O arquivo de configuração da aplicação está localizado em `src/main/resources/application.yml`. **É crucial que você atualize as credenciais do banco de dados para corresponder ao seu ambiente MySQL.**
 
-Localize a seção de `spring.datasource` e edite os campos `username` e `password`:
-
-\`\`\`yaml
-spring:
-  datasource:
-    # URL de conexão deve ser mantida, a menos que você mude a porta padrão do MySQL
-    url: jdbc:mysql://localhost:3306/zoo?createDatabaseIfNotExist=true&serverTimezone=UTC
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    # ATUALIZE COM SUAS CREDENCIAIS DO MYSQL
-    username: seu_username_aqui
-    password: sua_password_aqui
-  jpa:
-    hibernate:
-      ddl-auto: update # Configurado para atualizar o schema
-    show-sql: true
-    properties:
-      hibernate:
-        format_sql: true
-\`\`\`
+Edite os campos `username` e `password` para seus dados pessoais:
 
 #### 3. Execução do Projeto
 
 1.  Clone este repositório para sua máquina local.
-    \`\`\`bash
-    git clone https://aws.amazon.com/pt/what-is/repo/
-    \`\`\`
+    
+    git clone https://github.com/xxxxxx/
+    
 2.  Abra o projeto em sua IDE (como IntelliJ IDEA ou VS Code).
-3.  Garanta que a dependência **Maven** (ou Gradle) seja resolvida.
+3.  Garanta que a dependência **Maven** seja resolvida.
 4.  Execute a classe principal da aplicação (aquela com a anotação `@SpringBootApplication`).
 
-O servidor será iniciado na porta padrão (geralmente `8080`).
+O servidor será iniciado na porta padrão (`8080`).
 
 ---
 

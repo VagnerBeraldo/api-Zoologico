@@ -15,7 +15,7 @@ A aplicação foi desenvolvida com foco em:
 ![Print da Tela Inicial](https://github.com/VagnerBeraldo/appSenaClick/blob/main/assets/printTelas/telasSenaclickMobile2.png)
 <br><br>
 
-![Diagrama UML do Banco de Dados do Zoológico](src/main/assets/image/uml-zoo.png)
+![Diagrama UML do Banco de Dados do Zoológico](image/uml-zoo.png)
 
 * **Segurança:** Implementação de **JSON Web Tokens (JWT)** para autenticação e autorização seguras.
 * **Boas Práticas de Código:** Utilização de **Data Transfer Objects (DTOs)** para estruturar e tipar a comunicação de dados entre as camadas da aplicação, garantindo maior clareza e manutenção.

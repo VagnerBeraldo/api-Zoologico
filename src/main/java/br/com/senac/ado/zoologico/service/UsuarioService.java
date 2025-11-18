@@ -7,7 +7,6 @@ import br.com.senac.ado.zoologico.exception.ResourceNotFoundException;
 import br.com.senac.ado.zoologico.repository.UsuarioRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.ResourceAccessException;
 
 import java.util.List;
 import java.util.UUID;
@@ -29,7 +28,7 @@ public class UsuarioService {
     public UUID save(UsuarioDTO dto) {
 
        repository.findByEmail(dto.getEmail()).ifPresent(user -> {
-          throw new ConflictException("Usuario já existe: " + dto.getUsername());
+          throw new ConflictException("Usuario já cadastrado");
        });
 
         Usuario user = new Usuario();

@@ -3,6 +3,8 @@ package br.com.senac.ado.zoologico.service;
 import br.com.senac.ado.zoologico.dto.BilheteDTO;
 import br.com.senac.ado.zoologico.entity.Bilhete;
 import br.com.senac.ado.zoologico.entity.EventoZoologico;
+import br.com.senac.ado.zoologico.exception.MaxCapacityReachedException;
+import br.com.senac.ado.zoologico.exception.ResourceNotFoundException;
 import br.com.senac.ado.zoologico.repository.BilheteRepository;
 import br.com.senac.ado.zoologico.repository.EventoZoologicoRepository;
 import lombok.RequiredArgsConstructor;
@@ -32,26 +34,27 @@ public class BilheteService {
         return novoBilhete;
     }
 
-    public List<Bilhete> listar() {
+    public List<Bilhete> getAll() {
         return repository.findAll();
     }
 
-    public Bilhete buscar(UUID id) {
+    public Bilhete findById(UUID id) {
         return repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Bilhete não encontrado: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Bilhete não encontrado: " + id));
     }
 
     @Transactional
-    public Bilhete comprar(BilheteDTO dto) {
-        EventoZoologico evento = eventoRepo.findById(dto.getEventoId())
-                .orElseThrow(() -> new RuntimeException("Evento não encontrado"));
+    public Bilhete buy(BilheteDTO dto) {
 
-        long vendidos = repository.findAll().stream()
-                .filter(b -> b.getEvento().getId().equals(evento.getId()))
-                .count();
+        EventoZoologico evento = eventoRepo.findById(dto.getEventoId())
+                .orElseThrow(() -> new ResourceNotFoundException("Evento não encontrado"));
+
+        long vendidos = repository.countByEventoId(evento.getId());
 
         if (vendidos >= evento.getCapacidade()) {
-            throw new RuntimeException("Capacidade máxima atingida para este evento.");
+            throw new MaxCapacityReachedException(
+                    "Capacidade máxima atingida para este evento."
+            );
         }
 
         Bilhete bilhete = new Bilhete();
@@ -63,32 +66,43 @@ public class BilheteService {
         return repository.save(bilhete);
     }
 
-    public Bilhete atualizar(UUID id, BilheteDTO dto) {
+    @Transactional
+    public Bilhete update(UUID id, BilheteDTO dto) {
+
         Bilhete existente = repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Bilhete não encontrado: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Bilhete não encontrado: " + id));
 
         existente.setComprador(dto.getComprador());
         existente.setDataCompra(dto.getDataCompra());
         existente.setValor(dto.getValor());
 
-        if (dto.getEventoId() != null) {
+        // Atualizando evento somente se cliente pediu
+        if (dto.getEventoId() != null && !dto.getEventoId().equals(existente.getEvento().getId())) {
+
             EventoZoologico evento = eventoRepo.findById(dto.getEventoId())
-                    .orElseThrow(() -> new RuntimeException("Evento não encontrado"));
+                    .orElseThrow(() -> new ResourceNotFoundException("Evento não encontrado"));
+
             existente.setEvento(evento);
         }
 
         return repository.save(existente);
     }
 
-    public void excluir(UUID id) {
+    public void delete(UUID id) {
+        if (!repository.existsById(id)) {
+            throw new ResourceNotFoundException("Bilhete não encontrado para exclusão: " + id);
+        }
         repository.deleteById(id);
     }
 
     public Map<String, Long> totalBilhetesPorEvento() {
-        return repository.findAll().stream()
-                .collect(Collectors.groupingBy(
-                        b -> b.getEvento().getTitulo(),
-                        Collectors.counting()
+
+        List<Object[]> resultados = repository.contarPorEvento();
+
+        return resultados.stream()
+                .collect(Collectors.toMap(
+                        r -> (String) r[0],
+                        r -> (Long) r[1]
                 ));
     }
 

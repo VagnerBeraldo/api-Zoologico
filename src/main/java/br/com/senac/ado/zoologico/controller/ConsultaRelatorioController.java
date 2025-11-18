@@ -1,6 +1,7 @@
 package br.com.senac.ado.zoologico.controller;
 
 import br.com.senac.ado.zoologico.service.ConsultaRelatorioService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,7 +20,7 @@ public class ConsultaRelatorioController {
     }
 
     @GetMapping("/consultas-por-especie")
-    public List<Map<String, Object>> consultasPorEspecie() {
-        return service.consultasPorEspecie();
+    public ResponseEntity<List<Map<String, Object>>> consultasPorEspecie() {
+        return ResponseEntity.ok(service.consultasPorEspecie());
     }
 }

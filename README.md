@@ -11,8 +11,11 @@ Este projeto é um exercício proposto para a disciplina de **Desenvolvimento We
 A aplicação foi desenvolvida com foco em:
 * **Modelagem de Dados Eficiente:** O banco de dados foi desenhado para representar as entidades cruciais de um zoológico, como animais, espécies, habitats, eventos, veterinários, tratadores e usuários. **A estrutura completa do nosso Schema (UML) é a base do nosso banco de dados.**
     
+<br><br>
+![Print da Tela Inicial](https://github.com/VagnerBeraldo/appSenaClick/blob/main/assets/printTelas/telasSenaclickMobile2.png)
+<br><br>
 
-![Diagrama UML do Banco de Dados do Zoológico](image/uml-zoo.png)
+![Diagrama UML do Banco de Dados do Zoológico](src/main/assets/image/uml-zoo.png)
 
 * **Segurança:** Implementação de **JSON Web Tokens (JWT)** para autenticação e autorização seguras.
 * **Boas Práticas de Código:** Utilização de **Data Transfer Objects (DTOs)** para estruturar e tipar a comunicação de dados entre as camadas da aplicação, garantindo maior clareza e manutenção.
@@ -86,14 +89,12 @@ O servidor será iniciado na porta padrão (geralmente `8080`).
 
 ---
 
-### 🎯 Contato e Suporte
+### 🎯 Grupo
 
-Em caso de dúvidas sobre a estrutura do banco de dados, a implementação de DTOs, ou as rotas da API, consulte a documentação interna ou entre em contato com um dos membros do grupo.
-
-| Membro | Função no Projeto | Contato (e-mail/GitHub) |
+| Membro | Função no Projeto | Contato (GitHub) |
 | :--- | :--- | :--- |
-| [Seu Nome] | Líder/Back-end | [seu-email] |
-| [Nome do Colega 2] | Back-end/Database | [email do colega] |
-| [Nome do Colega 3] | Front-end (se houver) | [email do colega] |
+| [Erick Guimarães] | Líder/Back-end | [Erick](https://github.com/ErickGX) |
+| [Vagner Beraldo] | Código Seco | [Vagner](https://github.com/VagnerBeraldo) |
+| [Daiane Vitória] | Em análise | [Daiane](https://github.com/Vitoriaraso) |
 
 ---

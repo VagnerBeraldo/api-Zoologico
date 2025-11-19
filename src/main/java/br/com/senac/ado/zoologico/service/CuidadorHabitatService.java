@@ -4,6 +4,7 @@ import br.com.senac.ado.zoologico.dto.CuidadorHabitatDTO;
 import br.com.senac.ado.zoologico.entity.CuidadorHabitat;
 import br.com.senac.ado.zoologico.entity.Tratador;
 import br.com.senac.ado.zoologico.entity.Habitat;
+import br.com.senac.ado.zoologico.exception.ResourceNotFoundException;
 import br.com.senac.ado.zoologico.repository.CuidadorHabitatRepository;
 import br.com.senac.ado.zoologico.repository.TratadorRepository;
 import br.com.senac.ado.zoologico.repository.HabitatRepository;
@@ -21,39 +22,38 @@ public class CuidadorHabitatService {
     private final HabitatRepository habitatRepo;
 
 
-    public List<CuidadorHabitat> listarTodos() {
+    public List<CuidadorHabitat> getAll() {
         return repository.findAll();
     }
 
-    public CuidadorHabitat buscar(UUID id) {
-        return repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Associação Cuidador-Habitat não encontrada"));
+    public CuidadorHabitat findById(UUID id) {
+        return repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Associação cuidador-habitat não encontrada"));
     }
 
-    public CuidadorHabitat associar(CuidadorHabitatDTO dto) {
+    public UUID associar(CuidadorHabitatDTO dto) {
         Tratador tratador = tratadorRepo.findById(dto.getTratadorId())
-                .orElseThrow(() -> new RuntimeException("Tratador não encontrado"));
+                .orElseThrow(() -> new ResourceNotFoundException("Tratador não encontrado"));
 
         Habitat habitat = habitatRepo.findById(dto.getHabitatId())
-                .orElseThrow(() -> new RuntimeException("Habitat não encontrado"));
+                .orElseThrow(() -> new ResourceNotFoundException("Habitat não encontrado"));
 
         CuidadorHabitat registro = new CuidadorHabitat();
         registro.setTratador(tratador);
         registro.setHabitat(habitat);
         registro.setTurno(dto.getTurno());
 
-        return repository.save(registro);
+        return repository.save(registro).getId();
     }
 
-    public CuidadorHabitat atualizar(UUID id, CuidadorHabitatDTO dto) {
-        CuidadorHabitat existente = buscar(id);
+    public void update(UUID id, CuidadorHabitatDTO dto) {
+        CuidadorHabitat existente = findById(id);
         existente.setTurno(dto.getTurno());
-        return repository.save(existente);
+        repository.save(existente);
     }
 
     public void remover(UUID id) {
         if (!repository.existsById(id)) {
-            throw new RuntimeException("Associação Cuidador-Habitat não encontrada");
+            throw new ResourceNotFoundException("Associação Cuidador-Habitat não encontrada");
         }
         repository.deleteById(id);
     }

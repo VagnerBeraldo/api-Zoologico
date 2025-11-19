@@ -72,5 +72,18 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(error);
     }
 
+    @ExceptionHandler(MaxCapacityReachedException.class)
+    public ResponseEntity<ApiError> handleMaxCapacity(MaxCapacityReachedException ex,
+                                                      HttpServletRequest request) {
+
+        ApiError error = ApiError.of(
+                HttpStatus.CONFLICT,
+                ex.getMessage(),
+                request.getRequestURI()
+        );
+
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(error);
+    }
+
 
 }

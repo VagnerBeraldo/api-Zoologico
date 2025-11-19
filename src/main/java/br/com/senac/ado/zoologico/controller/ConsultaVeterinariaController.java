@@ -2,16 +2,13 @@ package br.com.senac.ado.zoologico.controller;
 
 import br.com.senac.ado.zoologico.dto.ConsultaDTO;
 import br.com.senac.ado.zoologico.entity.ConsultaVeterinaria;
-import br.com.senac.ado.zoologico.entity.Animal;
-import br.com.senac.ado.zoologico.entity.Veterinario;
-import br.com.senac.ado.zoologico.repository.AnimalRepository;
-import br.com.senac.ado.zoologico.repository.VeterinarioRepository;
 import br.com.senac.ado.zoologico.service.ConsultaVeterinariaService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
@@ -19,53 +16,34 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/api/consultas")
 @RequiredArgsConstructor
-public class ConsultaVeterinariaController {
+public class ConsultaVeterinariaController implements GenericController {
 
+    private static final String BASE_PATH = "/api/consultas";
     private final ConsultaVeterinariaService service;
-    private final AnimalRepository animalRepo;
-    private final VeterinarioRepository vetRepo;
 
     @GetMapping
-    public List<ConsultaVeterinaria> listar() {
-        return service.listarTodos();
+    public ResponseEntity<List<ConsultaVeterinaria>> getAll() {
+        return ResponseEntity.ok(service.getAll());
     }
 
     @GetMapping("/{id}")
-    public ConsultaVeterinaria buscar(@PathVariable UUID id) {
-        return service.buscar(id);
+    public ConsultaVeterinaria findById(@PathVariable UUID id) {
+        return service.findById(id);
     }
 
-
     @PostMapping
-    public ConsultaVeterinaria criar(@RequestBody ConsultaDTO dto) {
-        ConsultaVeterinaria consulta = new ConsultaVeterinaria();
-        consulta.setDataConsulta(dto.getDataConsulta());
-        consulta.setDiagnostico(dto.getDiagnostico());
-        consulta.setTratamento(dto.getTratamento());
-        consulta.setObservacoes(dto.getObservacoes());
-        consulta.setUrgente(dto.getUrgente());
-
-        Animal animal = animalRepo.findById(dto.getAnimalId())
-                .orElseThrow(() -> new RuntimeException("Animal não encontrado"));
-        Veterinario veterinario = vetRepo.findById(dto.getVeterinarioId())
-                .orElseThrow(() -> new RuntimeException("Veterinário não encontrado"));
-
-        consulta.setAnimal(animal);
-        consulta.setVeterinario(veterinario);
-
-        return service.salvar(consulta);
+    public ResponseEntity<Void> save(@RequestBody ConsultaDTO dto) {
+        var idGerado = service.save(dto);
+        URI location = gerarHeaderLocation(BASE_PATH, idGerado);
+        return ResponseEntity.created(location).build();
     }
 
     @PutMapping("/{id}")
-    public ConsultaVeterinaria atualizar(@PathVariable UUID id, @RequestBody ConsultaDTO dto) {
-        ConsultaVeterinaria existente = service.buscar(id);
-        existente.setDataConsulta(dto.getDataConsulta());
-        existente.setDiagnostico(dto.getDiagnostico());
-        existente.setTratamento(dto.getTratamento());
-        existente.setObservacoes(dto.getObservacoes());
-        existente.setUrgente(dto.getUrgente());
-        return service.salvar(existente);
+    public ResponseEntity<Void> update(@PathVariable UUID id, @RequestBody ConsultaDTO dto) {
+        service.update(id,dto);
+        return ResponseEntity.noContent().build();
     }
+
 
     @DeleteMapping("/{id}")
     public void excluir(@PathVariable UUID id) {

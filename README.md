@@ -16,11 +16,11 @@ A aplicação foi desenvolvida com foco em:
 <br><br>
 
 * **Segurança:** Implementação de **JSON Web Tokens (JWT)** para autenticação e autorização seguras.
-* **Boas Práticas de Código:** Utilização de **Data Transfer Objects (DTOs)**, **Mappers** para estruturar e tipar a comunicação de dados entre as camadas da aplicação, garantindo maior clareza e manutenção.
+* **Boas Práticas de Código:** Utilização de **Data Transfer Objects (DTOs)**, **Mappers** e **Exception** para estruturar e tipar a comunicação de dados entre as camadas da aplicação, garantindo maior clareza e manutenção.
 
 ---
 
-### ⚙️ Tecnologias Principais
+### ⚙️ Principais Tecnologias
 
 | Tecnologia | Versão | Função |
 | :--- | :--- | :--- |
@@ -28,8 +28,16 @@ A aplicação foi desenvolvida com foco em:
 | **Java** | **21** | Linguagem de programação. |
 | **Padrão** | **MVC Web** | Arquitetura do projeto. |
 | **Banco de Dados** | **MySQL** | Sistema de Gerenciamento de Banco de Dados. |
+
+
+### ⚙️ Boas Práticas de Padrões de codificação
+
+| Categoria | Padrão | Razão |
+| :--- | :--- | :--- |
 | **Segurança** | **JWT** | Geração e validação de tokens de acesso. |
 | **Design** | **DTO** | Padrão para transferência de dados. |
+| **Mappers** | **Mapper** | Padrão para conversão/mapeamento de objetos entre diferentes camadas. |
+| **Exception** | **Controller Advice** | Padrão centralizado para lidar com exceções (Exceptions) e mapeá-las para respostas HTTP adequadas. |
 
 ---
 
@@ -44,8 +52,13 @@ O projeto foi configurado para utilizar o **MySQL**. Siga as instruções abaixo
 * **Criação do Schema:**
     É obrigatório criar um banco de dados com o nome exato **`zoo`**. Você pode fazer isso executando o seguinte comando SQL em seu cliente MySQL (como MySQL Workbench, DBeaver, ou linha de comando):
 
-    * CREATE DATABASE zoo;
-    *Obs.: A criação das tabelas serão feitas automaticamente pelo Spring Boot ao rodar a aplicação*
+Para iniciar o banco de dados, execute o seguinte comando SQL:
+
+```sql
+CREATE DATABASE zoo
+```
+
+*Obs.: A criação das tabelas serão feitas automaticamente pelo Spring Boot ao rodar a aplicação*
 
 #### 2. Configuração do Projeto (`application.yml`)
 

@@ -1,5 +1,6 @@
 package br.com.senac.ado.zoologico.entity;
 
+import br.com.senac.ado.zoologico.enums.Roles;
 import jakarta.persistence.*;
 import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
@@ -24,6 +25,7 @@ public class Usuario {
     @Column(nullable = false)
     private String senha;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private String papel; // ADMIN, TRATADOR, VETERINARIO etc.
+    private Roles role; // ADMIN, TRATADOR, VETERINARIO etc.
 }

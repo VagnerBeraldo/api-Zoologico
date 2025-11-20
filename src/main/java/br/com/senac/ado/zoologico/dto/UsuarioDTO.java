@@ -7,5 +7,4 @@ public class UsuarioDTO {
     private String username;
     private String email;
     private String senha;
-    private String papel;
 }

@@ -1,4 +1,4 @@
-package br.com.senac.ado.zoologico.config;
+package br.com.senac.ado.zoologico.security.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

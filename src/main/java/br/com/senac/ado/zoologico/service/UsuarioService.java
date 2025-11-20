@@ -2,10 +2,13 @@ package br.com.senac.ado.zoologico.service;
 
 import br.com.senac.ado.zoologico.dto.UsuarioDTO;
 import br.com.senac.ado.zoologico.entity.Usuario;
+import br.com.senac.ado.zoologico.enums.Roles;
 import br.com.senac.ado.zoologico.exception.ConflictException;
 import br.com.senac.ado.zoologico.exception.ResourceNotFoundException;
 import br.com.senac.ado.zoologico.repository.UsuarioRepository;
+import br.com.senac.ado.zoologico.security.config.PasswordEncoderConfig;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,6 +19,7 @@ import java.util.UUID;
 public class UsuarioService {
 
     private final UsuarioRepository repository;
+    private final PasswordEncoderConfig passwordEncoderConfig;
 
     public List<Usuario> getAll() {
         return repository.findAll();
@@ -25,7 +29,7 @@ public class UsuarioService {
         return repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Recurso não Encontrado com o ID informado"));
     }
 
-    public UUID save(UsuarioDTO dto) {
+    public UUID saveUser(UsuarioDTO dto) {
 
        repository.findByEmail(dto.getEmail()).ifPresent(user -> {
           throw new ConflictException("Usuario já cadastrado");
@@ -34,8 +38,25 @@ public class UsuarioService {
         Usuario user = new Usuario();
         user.setUsername(dto.getUsername());
         user.setEmail(dto.getEmail());
-        user.setSenha(dto.getSenha());
-        user.setPapel(dto.getPapel());
+        String senhaCriptografada = passwordEncoderConfig.bCryptPasswordEncoder().encode(dto.getSenha());
+        user.setSenha(senhaCriptografada);
+        user.setRole(Roles.USER);
+        return repository.save(user).getId();
+    }
+
+
+    public UUID saveAdminUser(UsuarioDTO dto) {
+
+        repository.findByEmail(dto.getEmail()).ifPresent(user -> {
+            throw new ConflictException("Usuario já cadastrado");
+        });
+
+        Usuario user = new Usuario();
+        user.setUsername(dto.getUsername());
+        user.setEmail(dto.getEmail());
+        String senhaCriptografada = passwordEncoderConfig.bCryptPasswordEncoder().encode(dto.getSenha());
+        user.setSenha(senhaCriptografada);
+        user.setRole(Roles.ADMIN);
         return repository.save(user).getId();
     }
 
@@ -52,7 +73,6 @@ public class UsuarioService {
         user.setUsername(dto.getUsername());
         user.setEmail(dto.getEmail());
         user.setSenha(dto.getSenha());
-        user.setPapel(dto.getPapel());
         repository.save(user);
     }
 

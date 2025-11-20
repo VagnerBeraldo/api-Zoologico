@@ -6,11 +6,11 @@ import br.com.senac.ado.zoologico.service.UsuarioService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
 @RestController
@@ -32,9 +32,17 @@ public class UsuarioController implements GenericController{
         return ResponseEntity.ok(service.findById(id));
     }
 
+
     @PostMapping("/registrar")
-    public ResponseEntity<Void> save(@RequestBody @Valid UsuarioDTO request) {
-        UUID idGerado = service.save(request);
+    public ResponseEntity<Void> saveUser(@RequestBody @Valid UsuarioDTO request) {
+        UUID idGerado = service.saveUser(request);
+        URI location = gerarHeaderLocation(BASE_PATH,idGerado);
+        return ResponseEntity.created(location).build();
+    }
+
+    @PostMapping("/admin/registrar")
+    public ResponseEntity<Void> saveAdminUser(@RequestBody @Valid UsuarioDTO request) {
+        UUID idGerado = service.saveAdminUser(request);
         URI location = gerarHeaderLocation(BASE_PATH,idGerado);
         return ResponseEntity.created(location).build();
     }
@@ -52,7 +60,6 @@ public class UsuarioController implements GenericController{
         user.setUsername(dto.getUsername());
         user.setEmail(dto.getEmail());
         user.setSenha(dto.getSenha());
-        user.setPapel(dto.getPapel());
 
         service.update(id, user);
         return ResponseEntity.noContent().build();

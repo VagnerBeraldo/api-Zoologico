@@ -1,6 +1,6 @@
 package br.com.senac.ado.zoologico.service;
 
-import br.com.senac.ado.zoologico.dto.TratadorDTO;
+import br.com.senac.ado.zoologico.dto.Tratador.TratadorDTO;
 import br.com.senac.ado.zoologico.entity.Tratador;
 import br.com.senac.ado.zoologico.exception.ResourceNotFoundException;
 import br.com.senac.ado.zoologico.repository.TratadorRepository;
@@ -27,9 +27,9 @@ public class TratadorService {
     public UUID save(TratadorDTO dto) {
 
         Tratador tratador = new Tratador();
-        tratador.setNome(dto.getNome());
-        tratador.setCpf(dto.getCpf());
-        tratador.setTelefone(dto.getTelefone());
+        tratador.setNome(dto.nome());
+        tratador.setCpf(dto.cpf());
+        tratador.setTelefone(dto.telefone());
 
         return repository.save(tratador).getId();
     }

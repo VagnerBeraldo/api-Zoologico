@@ -1,6 +1,6 @@
 package br.com.senac.ado.zoologico.service;
 
-import br.com.senac.ado.zoologico.dto.BilheteDTO;
+import br.com.senac.ado.zoologico.dto.Bilhete.BilheteDTO;
 import br.com.senac.ado.zoologico.entity.Bilhete;
 import br.com.senac.ado.zoologico.entity.EventoZoologico;
 import br.com.senac.ado.zoologico.exception.MaxCapacityReachedException;
@@ -27,9 +27,9 @@ public class BilheteService {
 
     public Bilhete saveBilhete(BilheteDTO dto, EventoZoologico evento) {
         Bilhete novoBilhete = new Bilhete();
-        novoBilhete.setComprador(dto.getComprador());
+        novoBilhete.setComprador(dto.comprador());
         novoBilhete.setDataCompra(LocalDateTime.now());
-        novoBilhete.setValor(dto.getValor());
+        novoBilhete.setValor(dto.valor());
         novoBilhete.setEvento(evento);
         return novoBilhete;
     }
@@ -46,7 +46,7 @@ public class BilheteService {
     @Transactional
     public Bilhete buy(BilheteDTO dto) {
 
-        EventoZoologico evento = eventoRepo.findById(dto.getEventoId())
+        EventoZoologico evento = eventoRepo.findById(dto.eventoId())
                 .orElseThrow(() -> new ResourceNotFoundException("Evento não encontrado"));
 
         long vendidos = repository.countByEventoId(evento.getId());
@@ -58,9 +58,9 @@ public class BilheteService {
         }
 
         Bilhete bilhete = new Bilhete();
-        bilhete.setComprador(dto.getComprador());
-        bilhete.setDataCompra(dto.getDataCompra());
-        bilhete.setValor(dto.getValor());
+        bilhete.setComprador(dto.comprador());
+        bilhete.setDataCompra(dto.dataCompra());
+        bilhete.setValor(dto.valor());
         bilhete.setEvento(evento);
 
         return repository.save(bilhete);
@@ -72,14 +72,14 @@ public class BilheteService {
         Bilhete existente = repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Bilhete não encontrado: " + id));
 
-        existente.setComprador(dto.getComprador());
-        existente.setDataCompra(dto.getDataCompra());
-        existente.setValor(dto.getValor());
+        existente.setComprador(dto.comprador());
+        existente.setDataCompra(dto.dataCompra());
+        existente.setValor(dto.valor());
 
         // Atualizando evento somente se cliente pediu
-        if (dto.getEventoId() != null && !dto.getEventoId().equals(existente.getEvento().getId())) {
+        if (dto.eventoId() != null && !dto.eventoId().equals(existente.getEvento().getId())) {
 
-            EventoZoologico evento = eventoRepo.findById(dto.getEventoId())
+            EventoZoologico evento = eventoRepo.findById(dto.eventoId())
                     .orElseThrow(() -> new ResourceNotFoundException("Evento não encontrado"));
 
             existente.setEvento(evento);

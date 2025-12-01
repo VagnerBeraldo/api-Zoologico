@@ -1,6 +1,6 @@
 package br.com.senac.ado.zoologico.service;
 
-import br.com.senac.ado.zoologico.dto.AlimentacaoDTO;
+import br.com.senac.ado.zoologico.dto.Alimentacao.AlimentacaoDTO;
 import br.com.senac.ado.zoologico.entity.Alimentacao;
 import br.com.senac.ado.zoologico.entity.AlimentacaoId;
 import br.com.senac.ado.zoologico.entity.Animal;
@@ -33,19 +33,19 @@ public class AlimentacaoService {
     public Alimentacao save(AlimentacaoDTO dto) {
 
         // valida animal
-        Animal animal = animalService.findById(dto.getAnimalId());
+        Animal animal = animalService.findById(dto.animalId());
 
         // valida tratador (opcional)
         Tratador tratador = null;
-        if (dto.getTratadorId() != null) {
-            tratador = tratadorService.findById(dto.getTratadorId());
+        if (dto.tratadorId() != null) {
+            tratador = tratadorService.findById(dto.tratadorId());
         }
 
         // monta ID composto
         AlimentacaoId alimentacaoId = new AlimentacaoId(
-                dto.getAnimalId(),
-                dto.getTratadorId(),
-                dto.getData()
+                dto.animalId(),
+                dto.tratadorId(),
+                dto.data()
         );
 
         // checagem de duplicidade
@@ -59,9 +59,9 @@ public class AlimentacaoService {
         alimentacao.setId(alimentacaoId);
         alimentacao.setAnimal(animal);
         alimentacao.setTratador(tratador);
-        alimentacao.setTipoRacao(dto.getTipoRacao());
-        alimentacao.setQuantidadeKg(dto.getQuantidadeKg());
-        alimentacao.setHorario(dto.getHorario());
+        alimentacao.setTipoRacao(dto.tipoRacao());
+        alimentacao.setQuantidadeKg(dto.quantidadeKg());
+        alimentacao.setHorario(dto.horario());
 
         return repository.save(alimentacao);
     }
@@ -82,9 +82,9 @@ public class AlimentacaoService {
         Alimentacao existente = repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Registro de alimentação não encontrado"));
 
-        existente.setTipoRacao(dto.getTipoRacao());
-        existente.setQuantidadeKg(dto.getQuantidadeKg());
-        existente.setHorario(dto.getHorario());
+        existente.setTipoRacao(dto.tipoRacao());
+        existente.setQuantidadeKg(dto.quantidadeKg());
+        existente.setHorario(dto.horario());
 
         repository.save(existente);
     }

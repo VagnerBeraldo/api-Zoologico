@@ -1,6 +1,6 @@
 package br.com.senac.ado.zoologico.service;
 
-import br.com.senac.ado.zoologico.dto.VeterinarioDTO;
+import br.com.senac.ado.zoologico.dto.Veterianario.VeterinarioDTO;
 import br.com.senac.ado.zoologico.entity.Veterinario;
 import br.com.senac.ado.zoologico.exception.ResourceNotFoundException;
 import br.com.senac.ado.zoologico.repository.VeterinarioRepository;
@@ -27,9 +27,9 @@ public class VeterinarioService {
 
     public UUID save(VeterinarioDTO dto) {
         Veterinario veterinario = new Veterinario();
-        veterinario.setNome(dto.getNome());
-        veterinario.setCrmv(dto.getCrmv());
-        veterinario.setEspecialidade(dto.getEspecialidade());
+        veterinario.setNome(dto.nome());
+        veterinario.setCrmv(dto.crmv());
+        veterinario.setEspecialidade(dto.especialidade());
        return repository.save(veterinario).getId();
     }
 
@@ -38,9 +38,9 @@ public class VeterinarioService {
         Veterinario existente = repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Recurso não Encontrado com o ID informado"));
 
-        existente.setNome(dto.getNome());
-        existente.setCrmv(dto.getCrmv());
-        existente.setEspecialidade(dto.getEspecialidade());
+        existente.setNome(dto.nome());
+        existente.setCrmv(dto.crmv());
+        existente.setEspecialidade(dto.especialidade());
         repository.save(existente);
     }
 

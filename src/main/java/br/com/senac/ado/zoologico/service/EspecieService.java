@@ -1,6 +1,6 @@
 package br.com.senac.ado.zoologico.service;
 
-import br.com.senac.ado.zoologico.dto.EspecieDTO;
+import br.com.senac.ado.zoologico.dto.Especie.EspecieDTO;
 import br.com.senac.ado.zoologico.entity.Especie;
 import br.com.senac.ado.zoologico.exception.ResourceNotFoundException;
 import br.com.senac.ado.zoologico.repository.EspecieRepository;
@@ -26,16 +26,16 @@ public class EspecieService {
 
     public UUID save(EspecieDTO dto) {
         Especie especie = new Especie();
-        especie.setNomeComum(dto.getNomeComum());
-        especie.setNomeCientifico(dto.getNomeCientifico());
-        especie.setStatusConservacao(dto.getStatusConservacao());
+        especie.setNomeComum(dto.nomeComum());
+        especie.setNomeCientifico(dto.nomeCientifico());
+        especie.setStatusConservacao(dto.statusConservacao());
         return repository.save(especie).getId();
     }
 
     public void update(UUID id, EspecieDTO dto) {
         Especie existente = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Recurso não Encontrado com o ID informado"));
-        existente.setNomeComum(dto.getNomeComum());
-        existente.setNomeCientifico(dto.getNomeCientifico());
+        existente.setNomeComum(dto.nomeComum());
+        existente.setNomeCientifico(dto.nomeCientifico());
         repository.save(existente);
     }
 

@@ -1,6 +1,6 @@
 package br.com.senac.ado.zoologico.service;
 
-import br.com.senac.ado.zoologico.dto.CuidadorHabitatDTO;
+import br.com.senac.ado.zoologico.dto.CuidadorHabitat.CuidadorHabitatDTO;
 import br.com.senac.ado.zoologico.entity.CuidadorHabitat;
 import br.com.senac.ado.zoologico.entity.Tratador;
 import br.com.senac.ado.zoologico.entity.Habitat;
@@ -31,23 +31,23 @@ public class CuidadorHabitatService {
     }
 
     public UUID associar(CuidadorHabitatDTO dto) {
-        Tratador tratador = tratadorRepo.findById(dto.getTratadorId())
+        Tratador tratador = tratadorRepo.findById(dto.tratadorId())
                 .orElseThrow(() -> new ResourceNotFoundException("Tratador não encontrado"));
 
-        Habitat habitat = habitatRepo.findById(dto.getHabitatId())
+        Habitat habitat = habitatRepo.findById(dto.habitatId())
                 .orElseThrow(() -> new ResourceNotFoundException("Habitat não encontrado"));
 
         CuidadorHabitat registro = new CuidadorHabitat();
         registro.setTratador(tratador);
         registro.setHabitat(habitat);
-        registro.setTurno(dto.getTurno());
+        registro.setTurno(dto.turno());
 
         return repository.save(registro).getId();
     }
 
     public void update(UUID id, CuidadorHabitatDTO dto) {
         CuidadorHabitat existente = findById(id);
-        existente.setTurno(dto.getTurno());
+        existente.setTurno(dto.turno());
         repository.save(existente);
     }
 

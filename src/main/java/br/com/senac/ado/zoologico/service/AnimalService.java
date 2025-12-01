@@ -1,6 +1,6 @@
 package br.com.senac.ado.zoologico.service;
 
-import br.com.senac.ado.zoologico.dto.AnimalDTO;
+import br.com.senac.ado.zoologico.dto.Animal.AnimalDTO;
 import br.com.senac.ado.zoologico.entity.Animal;
 import br.com.senac.ado.zoologico.entity.Especie;
 import br.com.senac.ado.zoologico.entity.Habitat;
@@ -46,18 +46,18 @@ public class AnimalService {
     public UUID save(AnimalDTO dto) {
 
         Animal a = new Animal();
-        a.setNome(dto.getNome());
-        a.setSexo(dto.getSexo());
-        a.setDataNascimento(dto.getDataNascimento());
-        a.setStatus(dto.getStatus());
+        a.setNome(dto.nome());
+        a.setSexo(dto.sexo());
+        a.setDataNascimento(dto.dataNascimento());
+        a.setStatus(dto.status());
 
-        if (dto.getEspecieId() != null) {
-            Especie especie = especieService.findById(dto.getEspecieId());
+        if (dto.especieId() != null) {
+            Especie especie = especieService.findById(dto.especieId());
             a.setEspecie(especie);
         }
 
-        if (dto.getHabitatId() != null) {
-            Habitat habitat = habitatService.findById(dto.getHabitatId());
+        if (dto.habitatId() != null) {
+            Habitat habitat = habitatService.findById(dto.habitatId());
             a.setHabitat(habitat);
         }
         return repository.save(a).getId();
@@ -77,20 +77,20 @@ public class AnimalService {
         Animal existente = repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Animal não encontrado"));
 
-        existente.setNome(dto.getNome());
-        existente.setSexo(dto.getSexo());
-        existente.setDataNascimento(dto.getDataNascimento());
-        existente.setStatus(dto.getStatus());
+        existente.setNome(dto.nome());
+        existente.setSexo(dto.sexo());
+        existente.setDataNascimento(dto.dataNascimento());
+        existente.setStatus(dto.status());
 
         // Atualiza espécie se enviada
-        if (dto.getEspecieId() != null) {
-            Especie especie = especieService.findById(dto.getEspecieId());
+        if (dto.especieId() != null) {
+            Especie especie = especieService.findById(dto.especieId());
             existente.setEspecie(especie);
         }
 
         // Atualiza habitat se enviado
-        if (dto.getHabitatId() != null) {
-            Habitat habitat = habitatService.findById(dto.getHabitatId());
+        if (dto.habitatId() != null) {
+            Habitat habitat = habitatService.findById(dto.habitatId());
             existente.setHabitat(habitat);
         }
 

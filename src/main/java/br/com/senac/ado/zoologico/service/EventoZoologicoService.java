@@ -1,7 +1,7 @@
 package br.com.senac.ado.zoologico.service;
 
-import br.com.senac.ado.zoologico.dto.BilheteDTO;
-import br.com.senac.ado.zoologico.dto.EventoZoologicoDTO;
+import br.com.senac.ado.zoologico.dto.Bilhete.BilheteDTO;
+import br.com.senac.ado.zoologico.dto.EventoZoologico.EventoZoologicoDTO;
 import br.com.senac.ado.zoologico.entity.Bilhete;
 import br.com.senac.ado.zoologico.entity.EventoZoologico;
 import br.com.senac.ado.zoologico.exception.ResourceNotFoundException;
@@ -29,7 +29,7 @@ public class EventoZoologicoService {
     @Transactional
     public UUID venderBilhete(BilheteDTO dto) {
 
-        EventoZoologico evento = repository.findById(dto.getEventoId())
+        EventoZoologico evento = repository.findById(dto.eventoId())
                 .orElseThrow(() -> new EntityNotFoundException("Evento não encontrado."));
 
         if (evento.getCapacidade() <= 0) {
@@ -39,9 +39,9 @@ public class EventoZoologicoService {
         evento.setCapacidade(evento.getCapacidade() - 1);
 
         Bilhete bilhete = new Bilhete();
-        bilhete.setComprador(dto.getComprador());
+        bilhete.setComprador(dto.comprador());
         bilhete.setDataCompra(LocalDateTime.now());
-        bilhete.setValor(dto.getValor());
+        bilhete.setValor(dto.valor());
         bilhete.setEvento(evento);
 
         return bilheteRepository.save(bilhete).getId();
@@ -60,20 +60,20 @@ public class EventoZoologicoService {
     public UUID save(EventoZoologicoDTO dto) {
 
         EventoZoologico evento = new EventoZoologico();
-        evento.setTitulo(dto.getTitulo());
-        evento.setDescricao(dto.getDescricao());
-        evento.setData(LocalDate.from(dto.getData()));
-        evento.setCapacidade(dto.getCapacidade());
+        evento.setTitulo(dto.titulo());
+        evento.setDescricao(dto.descricao());
+        evento.setData(LocalDate.from(dto.data()));
+        evento.setCapacidade(dto.capacidade());
         return repository.save(evento).getId();
     }
 
     public void update(UUID id, EventoZoologicoDTO dto) {
         EventoZoologico existente = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Evento não encontrado"));
-        existente.setTitulo(dto.getTitulo());
-        existente.setData(LocalDate.from(dto.getData()));
-        existente.setCapacidade(dto.getCapacidade());
-        existente.setDescricao(dto.getDescricao());
+        existente.setTitulo(dto.titulo());
+        existente.setData(LocalDate.from(dto.data()));
+        existente.setCapacidade(dto.capacidade());
+        existente.setDescricao(dto.descricao());
         repository.save(existente);
     }
 

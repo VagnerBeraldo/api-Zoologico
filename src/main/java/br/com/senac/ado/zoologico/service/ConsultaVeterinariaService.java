@@ -1,6 +1,6 @@
 package br.com.senac.ado.zoologico.service;
 
-import br.com.senac.ado.zoologico.dto.ConsultaDTO;
+import br.com.senac.ado.zoologico.dto.Consulta.ConsultaDTO;
 import br.com.senac.ado.zoologico.entity.ConsultaVeterinaria;
 import br.com.senac.ado.zoologico.entity.Animal;
 import br.com.senac.ado.zoologico.entity.Veterinario;
@@ -49,25 +49,25 @@ public class ConsultaVeterinariaService {
     @Transactional
     public UUID save(ConsultaDTO dto) {
 
-        Animal animal = animalRepo.findById(dto.getAnimalId())
+        Animal animal = animalRepo.findById(dto.animalId())
                 .orElseThrow(() -> new ResourceNotFoundException("Animal não encontrado"));
 
-        Veterinario veterinario = veterinarioRepo.findById(dto.getVeterinarioId())
+        Veterinario veterinario = veterinarioRepo.findById(dto.veterinarioId())
                 .orElseThrow(() -> new ResourceNotFoundException("Veterinário não encontrado"));
 
         ConsultaVeterinaria consulta = new ConsultaVeterinaria();
         consulta.setAnimal(animal);
         consulta.setVeterinario(veterinario);
-        consulta.setDataConsulta(dto.getDataConsulta());
-        consulta.setDiagnostico(dto.getDiagnostico());
-        consulta.setTratamento(dto.getTratamento());
-        consulta.setObservacoes(dto.getObservacoes());
-        consulta.setUrgente(dto.getUrgente());
+        consulta.setDataConsulta(dto.dataConsulta());
+        consulta.setDiagnostico(dto.diagnostico());
+        consulta.setTratamento(dto.tratamento());
+        consulta.setObservacoes(dto.observacoes());
+        consulta.setUrgente(dto.urgente());
 
         ConsultaVeterinaria saved = repository.save(consulta);
 
         // Regra de negócio
-        if (Boolean.TRUE.equals(dto.getUrgente())) {
+        if (Boolean.TRUE.equals(dto.urgente())) {
             animal.setStatus("em_tratamento");
             animalRepo.save(animal);
         }
@@ -79,11 +79,11 @@ public class ConsultaVeterinariaService {
         ConsultaVeterinaria existente = repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Consulta não encontrada"));
 
-        existente.setDataConsulta(dto.getDataConsulta());
-        existente.setDiagnostico(dto.getDiagnostico());
-        existente.setTratamento(dto.getTratamento());
-        existente.setObservacoes(dto.getObservacoes());
-        existente.setUrgente(dto.getUrgente());
+        existente.setDataConsulta(dto.dataConsulta());
+        existente.setDiagnostico(dto.diagnostico());
+        existente.setTratamento(dto.tratamento());
+        existente.setObservacoes(dto.observacoes());
+        existente.setUrgente(dto.urgente());
 
         repository.save(existente);
     }

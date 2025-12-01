@@ -1,6 +1,6 @@
 package br.com.senac.ado.zoologico.controller;
 
-import br.com.senac.ado.zoologico.dto.TratadorDTO;
+import br.com.senac.ado.zoologico.dto.Tratador.TratadorDTO;
 import br.com.senac.ado.zoologico.entity.Tratador;
 import br.com.senac.ado.zoologico.service.TratadorService;
 import lombok.RequiredArgsConstructor;
@@ -43,9 +43,9 @@ public class TratadorController implements GenericController {
     @PutMapping("/{id}")
     public ResponseEntity<Void> update(@PathVariable UUID id, @RequestBody TratadorDTO dto) {
         Tratador tratador = new Tratador();
-        tratador.setNome(dto.getNome());
-        tratador.setCpf(dto.getCpf());
-        tratador.setTelefone(dto.getTelefone());
+        tratador.setNome(dto.nome());
+        tratador.setCpf(dto.cpf());
+        tratador.setTelefone(dto.telefone());
 
         service.update(id, tratador);
         return ResponseEntity.noContent().build();

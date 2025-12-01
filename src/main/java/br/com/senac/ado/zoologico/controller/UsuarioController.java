@@ -1,12 +1,11 @@
 package br.com.senac.ado.zoologico.controller;
 
-import br.com.senac.ado.zoologico.dto.UsuarioDTO;
+import br.com.senac.ado.zoologico.dto.Usuario.UsuarioDTO;
 import br.com.senac.ado.zoologico.entity.Usuario;
 import br.com.senac.ado.zoologico.service.UsuarioService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
@@ -57,9 +56,9 @@ public class UsuarioController implements GenericController{
     public ResponseEntity<Void> update(@PathVariable UUID id, @RequestBody @Valid UsuarioDTO dto) {
 
         Usuario user = new Usuario();
-        user.setUsername(dto.getUsername());
-        user.setEmail(dto.getEmail());
-        user.setSenha(dto.getSenha());
+        user.setUsername(dto.username());
+        user.setEmail(dto.email());
+        user.setSenha(dto.senha());
 
         service.update(id, user);
         return ResponseEntity.noContent().build();

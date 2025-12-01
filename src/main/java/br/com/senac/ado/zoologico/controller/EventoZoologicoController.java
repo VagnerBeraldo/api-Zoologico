@@ -1,7 +1,7 @@
 package br.com.senac.ado.zoologico.controller;
 
-import br.com.senac.ado.zoologico.dto.BilheteDTO;
-import br.com.senac.ado.zoologico.dto.EventoZoologicoDTO;
+import br.com.senac.ado.zoologico.dto.Bilhete.BilheteDTO;
+import br.com.senac.ado.zoologico.dto.EventoZoologico.EventoZoologicoDTO;
 import br.com.senac.ado.zoologico.entity.Bilhete;
 import br.com.senac.ado.zoologico.entity.EventoZoologico;
 import br.com.senac.ado.zoologico.service.EventoZoologicoService;
@@ -11,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
-import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 

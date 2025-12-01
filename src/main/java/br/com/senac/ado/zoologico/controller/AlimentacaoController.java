@@ -1,6 +1,6 @@
 package br.com.senac.ado.zoologico.controller;
 
-import br.com.senac.ado.zoologico.dto.AlimentacaoDTO;
+import br.com.senac.ado.zoologico.dto.Alimentacao.AlimentacaoDTO;
 import br.com.senac.ado.zoologico.entity.Alimentacao;
 import br.com.senac.ado.zoologico.service.AlimentacaoService;
 import lombok.RequiredArgsConstructor;

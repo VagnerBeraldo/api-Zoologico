@@ -1,6 +1,6 @@
 package br.com.senac.ado.zoologico.controller;
 
-import br.com.senac.ado.zoologico.dto.EspecieDTO;
+import br.com.senac.ado.zoologico.dto.Especie.EspecieDTO;
 import br.com.senac.ado.zoologico.entity.Especie;
 import br.com.senac.ado.zoologico.service.EspecieService;
 import jakarta.validation.Valid;

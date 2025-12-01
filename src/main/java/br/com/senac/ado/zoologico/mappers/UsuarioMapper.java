@@ -1,6 +1,6 @@
 package br.com.senac.ado.zoologico.mappers;
 
-import br.com.senac.ado.zoologico.dto.UsuarioDTO;
+import br.com.senac.ado.zoologico.dto.Usuario.UsuarioDTO;
 import br.com.senac.ado.zoologico.entity.Usuario;
 
 import org.mapstruct.Mapper;

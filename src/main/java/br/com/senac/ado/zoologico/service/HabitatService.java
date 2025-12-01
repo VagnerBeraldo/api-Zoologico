@@ -1,6 +1,6 @@
 package br.com.senac.ado.zoologico.service;
 
-import br.com.senac.ado.zoologico.dto.HabitatDTO;
+import br.com.senac.ado.zoologico.dto.Habitat.HabitatDTO;
 import br.com.senac.ado.zoologico.entity.Habitat;
 import br.com.senac.ado.zoologico.exception.ResourceNotFoundException;
 import br.com.senac.ado.zoologico.repository.HabitatRepository;
@@ -28,9 +28,9 @@ public class HabitatService {
     public UUID salvar(HabitatDTO dto) {
 
         Habitat habitat = new Habitat();
-        habitat.setNome(dto.getNome());
-        habitat.setTipo(dto.getTipo());
-        habitat.setAreaM2(Double.valueOf(dto.getAreaM2()));
+        habitat.setNome(dto.nome());
+        habitat.setTipo(dto.tipo());
+        habitat.setAreaM2(Double.valueOf(dto.areaM2()));
 
         return repository.save(habitat).getId();
     }
@@ -38,9 +38,9 @@ public class HabitatService {
     public Habitat update(UUID id, HabitatDTO dto) {
         Habitat existente = repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Recurso não Encontrado com o ID informado"));
-        existente.setNome(dto.getNome());
-        existente.setTipo(dto.getTipo());
-        existente.setAreaM2(Double.valueOf(dto.getAreaM2()));
+        existente.setNome(dto.nome());
+        existente.setTipo(dto.tipo());
+        existente.setAreaM2(Double.valueOf(dto.areaM2()));
         return repository.save(existente);
     }
 

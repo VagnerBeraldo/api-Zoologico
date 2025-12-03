@@ -45,6 +45,8 @@ public class SecurityConfig {
                                 "/swagger-ui/**",
                                 "/v3/api-docs/**"
                         ).permitAll()
+                        .requestMatchers("/api/usuarios/admin/registrar", "/api/usuarios/registrar")
+                        .permitAll()
 
                         // QUALQUER OUTRO ENDPOINT → exige autenticação
                         .anyRequest().authenticated()

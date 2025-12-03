@@ -2,43 +2,59 @@ package br.com.senac.ado.zoologico.controller;
 
 import br.com.senac.ado.zoologico.dto.Usuario.UsuarioDTO;
 import br.com.senac.ado.zoologico.entity.Usuario;
+import br.com.senac.ado.zoologico.exception.GlobalExceptionHandler;
 import br.com.senac.ado.zoologico.service.UsuarioService;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.doNothing;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import java.util.List;
 import java.util.UUID;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.mockito.Mockito.when;
 
-@WebMvcTest(UsuarioController.class)
+@ExtendWith(MockitoExtension.class)
 class UsuarioControllerTest {
 
-    @Autowired
-    private MockMvc mockMvc;
+    @InjectMocks
+    private UsuarioController controller;
 
-    @MockBean
+    @Mock
     private UsuarioService usuarioService;
 
-    @Autowired
-    private ObjectMapper mapper;
+    private MockMvc mockMvc;
+
+    @BeforeEach
+    void setup() {
+        mockMvc = MockMvcBuilders
+                .standaloneSetup(controller)
+                .setControllerAdvice(new GlobalExceptionHandler()) // se tiver
+                .build();
+    }
 
     @Test
     void listAll_shouldReturn200() throws Exception {
         Usuario u = new Usuario();
         u.setId(UUID.randomUUID());
 
-        Mockito.when(usuarioService.getAll()).thenReturn(List.of(u));
+        when(usuarioService.getAll()).thenReturn(List.of(u));
 
         mockMvc.perform(get("/api/usuarios"))
-                .andExpect(status().isOk());
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].id").value(u.getId().toString()));
     }
 
     @Test
@@ -47,10 +63,11 @@ class UsuarioControllerTest {
         Usuario u = new Usuario();
         u.setId(id);
 
-        Mockito.when(usuarioService.findById(id)).thenReturn(u);
+        when(usuarioService.findById(id)).thenReturn(u);
 
-        mockMvc.perform(get("/api/usuarios/" + id))
-                .andExpect(status().isOk());
+        mockMvc.perform(get("/api/usuarios/{id}", id))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(id.toString()));
     }
 
     @Test
@@ -58,28 +75,35 @@ class UsuarioControllerTest {
         UsuarioDTO dto = new UsuarioDTO("user", "email@test.com", "1234");
         UUID id = UUID.randomUUID();
 
-        Mockito.when(usuarioService.saveUser(dto)).thenReturn(id);
+        when(usuarioService.saveUser(dto)).thenReturn(id);
 
         mockMvc.perform(post("/api/usuarios/registrar")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(mapper.writeValueAsString(dto)))
+                        .content(new ObjectMapper().writeValueAsString(dto)))
                 .andExpect(status().isCreated())
-                .andExpect(header().exists("Location"));
+                .andExpect(header().string("Location", "http://localhost/api/usuarios/" + id));
     }
 
     @Test
     void update_shouldReturn204() throws Exception {
+        UUID id = UUID.randomUUID();
         UsuarioDTO dto = new UsuarioDTO("user", "email@test.com", "1234");
 
-        mockMvc.perform(put("/api/usuarios/" + UUID.randomUUID())
+        doNothing().when(usuarioService).update(eq(id), any());
+
+        mockMvc.perform(put("/api/usuarios/{id}", id)
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(mapper.writeValueAsString(dto)))
+                        .content(new ObjectMapper().writeValueAsString(dto)))
                 .andExpect(status().isNoContent());
     }
 
     @Test
     void delete_shouldReturn204() throws Exception {
-        mockMvc.perform(delete("/api/usuarios/" + UUID.randomUUID()))
+        UUID id = UUID.randomUUID();
+
+        doNothing().when(usuarioService).deleteById(id);
+
+        mockMvc.perform(delete("/api/usuarios/{id}", id))
                 .andExpect(status().isNoContent());
     }
 }

@@ -2,137 +2,146 @@ package br.com.senac.ado.zoologico.service;
 
 import br.com.senac.ado.zoologico.dto.Usuario.UsuarioDTO;
 import br.com.senac.ado.zoologico.entity.Usuario;
+import br.com.senac.ado.zoologico.enums.Roles;
 import br.com.senac.ado.zoologico.exception.ConflictException;
 import br.com.senac.ado.zoologico.exception.ResourceNotFoundException;
 import br.com.senac.ado.zoologico.repository.UsuarioRepository;
+import br.com.senac.ado.zoologico.security.config.PasswordEncoderConfig;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+@ExtendWith(MockitoExtension.class)
 class UsuarioServiceTest {
 
     @Mock
     private UsuarioRepository repository;
 
     @Mock
-    private br.com.senac.ado.zoologico.security.config.PasswordEncoderConfig passwordConfig;
+    private PasswordEncoderConfig passwordEncoderConfig;
+
+    @Mock
+    private PasswordEncoder encoder;
 
     @InjectMocks
     private UsuarioService service;
 
+    private Usuario usuario;
+    private UUID id;
+
     @BeforeEach
     void setup() {
-        MockitoAnnotations.openMocks(this);
-        when(passwordConfig.bCryptPasswordEncoder()).thenReturn(new BCryptPasswordEncoder());
+        id = UUID.randomUUID();
+        usuario = new Usuario();
+        usuario.setId(id);
+        usuario.setUsername("Erick");
+        usuario.setEmail("erick@test.com");
+        usuario.setSenha("123");
+        usuario.setRole(Roles.USER);
     }
 
+    // ---------- GET ALL ----------
     @Test
     void getAll_shouldReturnList() {
-        List<Usuario> lista = List.of(new Usuario());
-        when(repository.findAll()).thenReturn(lista);
+        when(repository.findAll()).thenReturn(List.of(usuario));
 
         List<Usuario> result = service.getAll();
 
         assertEquals(1, result.size());
-        verify(repository, times(1)).findAll();
+        assertEquals("Erick", result.get(0).getUsername());
     }
 
+    // ---------- FIND BY ID ----------
     @Test
     void findById_shouldReturnUser() {
-        UUID id = UUID.randomUUID();
-        Usuario u = new Usuario();
-        u.setId(id);
-
-        when(repository.findById(id)).thenReturn(Optional.of(u));
+        when(repository.findById(id)).thenReturn(Optional.of(usuario));
 
         Usuario result = service.findById(id);
 
-        assertEquals(id, result.getId());
+        assertEquals("Erick", result.getUsername());
     }
 
     @Test
     void findById_shouldThrowNotFound() {
-        UUID id = UUID.randomUUID();
-
         when(repository.findById(id)).thenReturn(Optional.empty());
 
         assertThrows(ResourceNotFoundException.class, () -> service.findById(id));
     }
 
+    // ---------- SAVE USER ----------
     @Test
     void saveUser_shouldCreateUser() {
-        UsuarioDTO dto = new UsuarioDTO("joao", "j@a.com", "1234");
-
-        Usuario saved = new Usuario();
-        saved.setId(UUID.randomUUID());
+        UsuarioDTO dto = new UsuarioDTO("Erick", "erick@test.com", "123");
 
         when(repository.findByEmail(dto.email())).thenReturn(Optional.empty());
-        when(repository.save(any())).thenReturn(saved);
+        when(passwordEncoderConfig.bCryptPasswordEncoder()).thenReturn((BCryptPasswordEncoder) encoder);
+        when(encoder.encode(dto.senha())).thenReturn("hashed");
+        when(repository.save(any())).thenReturn(usuario);
 
-        UUID id = service.saveUser(dto);
+        UUID result = service.saveUser(dto);
 
-        assertNotNull(id);
-        verify(repository, times(1)).save(any());
+        assertEquals(id, result);
+        verify(repository).save(any(Usuario.class));
     }
 
     @Test
     void saveUser_shouldThrowConflict() {
-        UsuarioDTO dto = new UsuarioDTO("joao", "j@a.com", "1234");
+        UsuarioDTO dto = new UsuarioDTO("Erick", "erick@test.com", "123");
 
-        when(repository.findByEmail(dto.email())).thenReturn(Optional.of(new Usuario()));
+        when(repository.findByEmail(dto.email())).thenReturn(Optional.of(usuario));
 
         assertThrows(ConflictException.class, () -> service.saveUser(dto));
     }
 
+    // ----------- UPDATE -----------
     @Test
-    void update_shouldUpdateUser() {
-        UUID id = UUID.randomUUID();
+    void update_shouldModifyUser() {
+        Usuario novo = new Usuario();
+        novo.setUsername("Novo");
+        novo.setEmail("novo@test.com");
+        novo.setSenha("999");
 
-        Usuario existing = new Usuario();
-        existing.setId(id);
+        when(repository.findById(id)).thenReturn(Optional.of(usuario));
+        when(repository.existsByEmailAndIdNot(novo.getEmail(), id)).thenReturn(false);
 
-        Usuario dto = new Usuario();
-        dto.setUsername("novo");
-        dto.setEmail("novo@email.com");
-        dto.setSenha("senha");
+        service.update(id, novo);
 
-        when(repository.findById(id)).thenReturn(Optional.of(existing));
-        when(repository.existsByEmailAndIdNot(dto.getEmail(), id)).thenReturn(false);
-
-        service.update(id, dto);
-
-        verify(repository, times(1)).save(existing);
-        assertEquals("novo", existing.getUsername());
+        verify(repository).save(usuario);
+        assertEquals("Novo", usuario.getUsername());
     }
 
     @Test
-    void update_shouldThrowConflict() {
-        UUID id = UUID.randomUUID();
+    void update_shouldThrowConflictForEmail() {
+        Usuario novo = new Usuario();
+        novo.setEmail("email@existe.com");
 
-        Usuario existing = new Usuario();
-        existing.setId(id);
+        when(repository.findById(id)).thenReturn(Optional.of(usuario));
+        when(repository.existsByEmailAndIdNot(novo.getEmail(), id)).thenReturn(true);
 
-        Usuario dto = new Usuario();
-        dto.setEmail("email@ex.com");
-
-        when(repository.findById(id)).thenReturn(Optional.of(existing));
-        when(repository.existsByEmailAndIdNot(dto.getEmail(), id)).thenReturn(true);
-
-        assertThrows(ConflictException.class, () -> service.update(id, dto));
+        assertThrows(ConflictException.class, () -> service.update(id, novo));
     }
 
     @Test
-    void delete_shouldDelete() {
-        UUID id = UUID.randomUUID();
+    void update_shouldThrowNotFound() {
+        when(repository.findById(id)).thenReturn(Optional.empty());
 
+        assertThrows(ResourceNotFoundException.class, () -> service.update(id, usuario));
+    }
+
+    // ----------- DELETE -----------
+    @Test
+    void deleteById_shouldDelete() {
         when(repository.existsById(id)).thenReturn(true);
 
         service.deleteById(id);
@@ -141,10 +150,10 @@ class UsuarioServiceTest {
     }
 
     @Test
-    void delete_shouldThrowNotFound() {
-        UUID id = UUID.randomUUID();
+    void deleteById_shouldThrowNotFound() {
         when(repository.existsById(id)).thenReturn(false);
 
         assertThrows(ResourceNotFoundException.class, () -> service.deleteById(id));
     }
 }
+

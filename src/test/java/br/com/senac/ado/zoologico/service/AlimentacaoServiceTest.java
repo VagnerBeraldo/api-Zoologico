@@ -1,10 +1,7 @@
-package br.com.senac.ado.zoologico;
+package br.com.senac.ado.zoologico.service;
 
 import br.com.senac.ado.zoologico.entity.Alimentacao;
 import br.com.senac.ado.zoologico.repository.AlimentacaoRepository;
-import br.com.senac.ado.zoologico.service.AlimentacaoService;
-import br.com.senac.ado.zoologico.service.AnimalService;
-import br.com.senac.ado.zoologico.service.TratadorService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

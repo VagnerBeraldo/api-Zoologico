@@ -1,6 +1,5 @@
-package br.com.senac.ado.zoologico;
+package br.com.senac.ado.zoologico.repository;
 
-import br.com.senac.ado.zoologico.repository.ConsultaVeterinariaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import java.util.List;

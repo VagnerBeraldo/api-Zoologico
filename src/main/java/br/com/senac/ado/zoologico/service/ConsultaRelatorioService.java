@@ -18,7 +18,7 @@ public class ConsultaRelatorioService {
         this.repository = repository;
     }
 
-    public List<Map<String, Object>> consultasPorEspecie() {
-        return repository.contarConsultasPorEspecie();
+    public List<Map<String, Object>> consultasProdutividade() {
+        return repository.contarConsultasProdutividade();
     }
 }

@@ -20,7 +20,7 @@ public class ConsultaRelatorioController {
     }
 
     @GetMapping("/consultas-por-especie")
-    public ResponseEntity<List<Map<String, Object>>> consultasPorEspecie() {
-        return ResponseEntity.ok(service.consultasPorEspecie());
+    public ResponseEntity<List<Map<String, Object>>> consultasProtutividade() {
+        return ResponseEntity.ok(service.consultasProdutividade());
     }
 }

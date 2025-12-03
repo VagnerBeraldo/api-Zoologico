@@ -38,7 +38,7 @@ class ConsultaRelatorioServiceParaChamarRepositorioTest {
 
         // Configura o mock: Quando o serviço chamar repository.contarConsultasPorEspecie(),
         // ele deve retornar nossa lista simulada, sem ir ao banco.
-        when(repository.contarConsultasPorEspecie()).thenReturn(dadosSimulados);
+        when(repository.contarConsultasProdutividade()).thenReturn(dadosSimulados);
 
         // ACT
         List<Map<String, Object>> resultado = service.consultasPorEspecie();
@@ -46,7 +46,7 @@ class ConsultaRelatorioServiceParaChamarRepositorioTest {
         // ASSERT
 
         // 1. Verifica se o método correto do repositório foi chamado (confirma a integração service->repository)
-        verify(repository).contarConsultasPorEspecie();
+        verify(repository).contarConsultasProdutividade();
 
         // 2. Verifica a estrutura e os valores retornados (confirma que o serviço repassou os dados corretamente)
         assertFalse(resultado.isEmpty(), "O resultado não deve ser vazio.");

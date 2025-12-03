@@ -31,14 +31,14 @@ class ConsultaRelatorioServiceTest {
                 Map.of("especie", "Leão", "totalConsultas", 12L),
                 Map.of("especie", "Macaco", "totalConsultas", 5L)
         );
-        when(repository.contarConsultasPorEspecie()).thenReturn(mockResult);
+        when(repository.contarConsultasProdutividade()).thenReturn(mockResult);
 
         // ACT
-        List<Map<String, Object>> resultado = service.consultasPorEspecie();
+        List<Map<String, Object>> resultado = service.consultasProdutividade();
 
         // ASSERT
         // Verifica se o método correto do repositório foi chamado
-        verify(repository).contarConsultasPorEspecie();
+        verify(repository).contarConsultasProdutividade();
         assertNotNull(resultado);
         assertFalse(resultado.isEmpty());
     }

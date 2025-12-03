@@ -21,7 +21,7 @@ class ConsultaVeterinariaRepositoryTest {
         // ARRANGE: (Neste ponto, o banco H2 estaria carregado com dados de teste)
 
         // ACT
-        List<Map<String, Object>> resultados = repository.contarConsultasPorEspecie();
+        List<Map<String, Object>> resultados = repository.contarConsultasProdutividade();
 
         // ASSERT
         assertFalse(resultados.isEmpty(), "Deve retornar resultados de contagem.");

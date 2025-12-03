@@ -8,18 +8,21 @@ import br.com.senac.ado.zoologico.exception.ResourceNotFoundException;
 import br.com.senac.ado.zoologico.repository.UsuarioRepository;
 import br.com.senac.ado.zoologico.security.config.PasswordEncoderConfig;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import java.util.*;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -170,5 +173,52 @@ class UsuarioServiceTest {
 
         assertThrows(ResourceNotFoundException.class, () -> service.deleteById(id));
     }
-}
 
+    @Test
+    @DisplayName("saveAdminUser_shouldCreateAdminUser")
+    void saveAdminUser_shouldCreateAdminUser() {
+        UsuarioDTO dto = new UsuarioDTO("Admin", "admin@test.com", "456");
+
+        // 1. Configura Mocks de criptografia (seguindo o padrão do seu saveUser)
+        BCryptPasswordEncoder bCrypt = mock(BCryptPasswordEncoder.class);
+        when(passwordEncoderConfig.bCryptPasswordEncoder()).thenReturn(bCrypt);
+        when(bCrypt.encode(dto.senha())).thenReturn("hashed_admin"); // Mocka o encode
+
+        // 2. Mocka consulta de email: retorna Optional vazio (não existe)
+        when(repository.findByEmail(dto.email())).thenReturn(Optional.empty());
+
+        // 3. Mocka a entidade salva e a verifica
+        UUID idAdmin = UUID.randomUUID();
+        Usuario usuarioSalvo = new Usuario();
+        usuarioSalvo.setId(idAdmin);
+
+        when(repository.save(any(Usuario.class))).thenAnswer(invocation -> {
+            Usuario userToSave = invocation.getArgument(0);
+            // Verifica se a Role está correta
+            assertEquals(Roles.ADMIN, userToSave.getRole(), "A Role deve ser ADMIN.");
+            userToSave.setId(idAdmin);
+            return userToSave;
+        });
+
+        // Executa
+        UUID result = service.saveAdminUser(dto);
+
+        // Asserts
+        assertEquals(idAdmin, result);
+        verify(repository).save(any(Usuario.class));
+        verify(bCrypt).encode("456"); // Verifica a chamada de criptografia
+    }
+
+    @Test
+    @DisplayName("saveAdminUser_shouldThrowConflict")
+    void saveAdminUser_shouldThrowConflict() {
+        UsuarioDTO dto = new UsuarioDTO("Admin", "erick@test.com", "456"); // Usa email que já existe no setup
+
+        // Mocka consulta de email: retorna o usuário existente (conflito)
+        when(repository.findByEmail(dto.email())).thenReturn(Optional.of(usuario));
+
+        // Asserts
+        assertThrows(ConflictException.class, () -> service.saveAdminUser(dto));
+        verify(repository, never()).save(any(Usuario.class)); // Garante que não salvou
+    }
+}

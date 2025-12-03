@@ -1,11 +1,10 @@
-package br.com.senac.ado.zoologico;
+package br.com.senac.ado.zoologico.service;
 
 import br.com.senac.ado.zoologico.dto.Bilhete.BilheteDTO;
 import br.com.senac.ado.zoologico.entity.Bilhete;
 import br.com.senac.ado.zoologico.entity.EventoZoologico;
 import br.com.senac.ado.zoologico.repository.BilheteRepository;
 import br.com.senac.ado.zoologico.repository.EventoZoologicoRepository;
-import br.com.senac.ado.zoologico.service.EventoZoologicoService;
 import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

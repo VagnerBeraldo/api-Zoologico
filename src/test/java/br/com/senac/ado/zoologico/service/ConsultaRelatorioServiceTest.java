@@ -1,8 +1,6 @@
-package br.com.senac.ado.zoologico;
+package br.com.senac.ado.zoologico.service;
 
 import br.com.senac.ado.zoologico.repository.ConsultaVeterinariaRepository;
-import br.com.senac.ado.zoologico.service.ConsultaRelatorioService;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

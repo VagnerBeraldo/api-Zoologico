@@ -5,7 +5,6 @@ import br.com.senac.ado.zoologico.entity.Usuario;
 import br.com.senac.ado.zoologico.service.UsuarioService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -13,7 +12,8 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.util.*;
+import java.util.List;
+import java.util.UUID;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -24,8 +24,8 @@ class UsuarioControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
-    @Mock
-    private UsuarioService service;
+    @MockBean
+    private UsuarioService usuarioService;
 
     @Autowired
     private ObjectMapper mapper;
@@ -35,7 +35,7 @@ class UsuarioControllerTest {
         Usuario u = new Usuario();
         u.setId(UUID.randomUUID());
 
-        Mockito.when(service.getAll()).thenReturn(List.of(u));
+        Mockito.when(usuarioService.getAll()).thenReturn(List.of(u));
 
         mockMvc.perform(get("/api/usuarios"))
                 .andExpect(status().isOk());
@@ -47,7 +47,7 @@ class UsuarioControllerTest {
         Usuario u = new Usuario();
         u.setId(id);
 
-        Mockito.when(service.findById(id)).thenReturn(u);
+        Mockito.when(usuarioService.findById(id)).thenReturn(u);
 
         mockMvc.perform(get("/api/usuarios/" + id))
                 .andExpect(status().isOk());
@@ -58,7 +58,7 @@ class UsuarioControllerTest {
         UsuarioDTO dto = new UsuarioDTO("user", "email@test.com", "1234");
         UUID id = UUID.randomUUID();
 
-        Mockito.when(service.saveUser(dto)).thenReturn(id);
+        Mockito.when(usuarioService.saveUser(dto)).thenReturn(id);
 
         mockMvc.perform(post("/api/usuarios/registrar")
                         .contentType(MediaType.APPLICATION_JSON)

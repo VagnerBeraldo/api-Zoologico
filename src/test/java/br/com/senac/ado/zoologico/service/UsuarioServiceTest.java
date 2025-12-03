@@ -2,14 +2,14 @@ package br.com.senac.ado.zoologico.service;
 
 import br.com.senac.ado.zoologico.dto.Usuario.UsuarioDTO;
 import br.com.senac.ado.zoologico.entity.Usuario;
-import br.com.senac.ado.zoologico.enums.Roles;
 import br.com.senac.ado.zoologico.exception.ConflictException;
 import br.com.senac.ado.zoologico.exception.ResourceNotFoundException;
 import br.com.senac.ado.zoologico.repository.UsuarioRepository;
-import br.com.senac.ado.zoologico.security.config.PasswordEncoderConfig;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.*;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.*;
@@ -23,7 +23,7 @@ class UsuarioServiceTest {
     private UsuarioRepository repository;
 
     @Mock
-    private PasswordEncoderConfig passwordConfig;
+    private br.com.senac.ado.zoologico.security.config.PasswordEncoderConfig passwordConfig;
 
     @InjectMocks
     private UsuarioService service;

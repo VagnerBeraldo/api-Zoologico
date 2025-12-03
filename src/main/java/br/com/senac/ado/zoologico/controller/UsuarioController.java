@@ -46,11 +46,6 @@ public class UsuarioController implements GenericController{
         return ResponseEntity.created(location).build();
     }
 
-//    @PostMapping("/login")
-//    public Map<String, String> login(@RequestBody UsuarioDTO dto) {
-//        boolean ok = service.autenticar(dto.getEmail(), dto.getSenha());
-//        return Map.of("mensagem", ok ? "Login realizado com sucesso!" : "Usuário ou senha incorretos!");
-//    }
 
     @PutMapping("/{id}")
     public ResponseEntity<Void> update(@PathVariable UUID id, @RequestBody @Valid UsuarioDTO dto) {

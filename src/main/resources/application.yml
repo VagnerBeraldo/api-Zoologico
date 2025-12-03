@@ -6,7 +6,7 @@ spring:
     url: jdbc:mysql://localhost:3306/zoo?createDatabaseIfNotExist=true&serverTimezone=UTC
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
-    password: root
+    password: rpmonn
     hikari:
       maximum-pool-size: 100
 

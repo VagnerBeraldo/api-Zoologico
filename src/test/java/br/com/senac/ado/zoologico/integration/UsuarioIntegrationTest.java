@@ -8,6 +8,8 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -15,7 +17,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc(addFilters = false)
 class UsuarioIntegrationTest {
-
     @Autowired
     private MockMvc mockMvc;
 
@@ -25,7 +26,7 @@ class UsuarioIntegrationTest {
     @Test
     void shouldCreateAndGetUser() throws Exception {
 
-        UsuarioDTO dto = new UsuarioDTO("user", "email@test.com", "1234");
+        UsuarioDTO dto = new UsuarioDTO("user", "email@test123.com", "1234");
 
         String location = mockMvc.perform(post("/api/usuarios/registrar")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -35,7 +36,7 @@ class UsuarioIntegrationTest {
                 .getResponse()
                 .getHeader("Location");
 
-        assert location != null;
+        assertNotNull(location);
 
         mockMvc.perform(get(location))
                 .andExpect(status().isOk());

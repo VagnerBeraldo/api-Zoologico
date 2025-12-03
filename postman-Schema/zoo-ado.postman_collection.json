@@ -1,0 +1,1861 @@
+{
+	"info": {
+		"_postman_id": "7917f9a4-6895-4dab-95df-1e75214a16f5",
+		"name": "zoo-ado",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "40990597",
+		"_collection_link": "https://restless-water-237433.postman.co/workspace/My-Workspace~f511eaa4-f5cf-4b0e-831a-4d3814593a55/collection/40990597-7917f9a4-6895-4dab-95df-1e75214a16f5?action=share&source=collection_link&creator=40990597"
+	},
+	"item": [
+		{
+			"name": "usuário",
+			"item": [
+				{
+					"name": "inserirUser",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"username\": \"usuario normal\",\r\n  \"email\": \"normaluser@gmail.com\",\r\n  \"senha\": \"normal123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/usuarios/registrar",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"usuarios",
+								"registrar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "inserirAdmin",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"username\": \"admin\",\r\n  \"email\": \"adm@gmail.com\",\r\n  \"senha\": \"adm123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/usuarios/admin/registrar",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"usuarios",
+								"admin",
+								"registrar"
+							],
+							"query": [
+								{
+									"key": "nome",
+									"value": "Joaninha",
+									"disabled": true
+								},
+								{
+									"key": "habitat",
+									"value": "Brasileiro",
+									"disabled": true
+								},
+								{
+									"key": "status",
+									"value": "saudavel\n",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "buscar",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/usuarios",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"usuarios"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "buscar por ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/usuarios/:id",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"usuarios",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "6c1088a9-9ce7-466a-adf3-57e68f36bbb3"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "alterar",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"username\": \"veterinario X\",\r\n        \"email\": \"Elinor8@yahoo.com\",\r\n        \"senha\": \"abcX\",\r\n        \"papel\": \"VETERINARIOX\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/usuarios/:id",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"usuarios",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "6c1088a9-9ce7-466a-adf3-57e68f36bbb3"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "excluir",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"username\": \"tratador\",\r\n  \"senha\": \"abcx\",\r\n  \"papel\": \"TRATADOR\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/usuarios/:id",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"usuarios",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "f2b18901-28f9-4d43-8387-f3a67d5d9e99"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "especie",
+			"item": [
+				{
+					"name": "inserir",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"nomeCientifico\": \"{{$randomAdjective}}\",\r\n  \"nomeComum\": \"{{$randomUserName}}\",\r\n  \"descricao\": \"{{$randomCatchPhrase}}\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/especies",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"especies"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "buscar",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/especies",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"especies"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "buscar por ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/especies/:id",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"especies",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "0371742e-31e5-4fbd-881e-508b6ca5743a"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "atualizar",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"nomeCientifico\": \"Morcego Preto\",\r\n  \"nomeComum\": \"Morcego\",\r\n  \"descricao\": \"Rato voador.\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/especies/:id",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"especies",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "0371742e-31e5-4fbd-881e-508b6ca5743a"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "excluir",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/especies/:id",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"especies",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "6cace0f7-2539-42a6-827c-9a04a0b12ae5"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "habitat",
+			"item": [
+				{
+					"name": "inserir",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"nome\": \"Teste\",\r\n  \"tipo\": \"Fechado\",\r\n  \"areaM2\": 3200.0\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/habitats",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"habitats"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "buscar",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/habitats",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"habitats"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "buscar por ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/habitats/:id",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"habitats",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "67c24da2-f7dd-4013-9948-ee9ed3eac866"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "alterar",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"nome\": \"Floresta Tropical\",\r\n  \"tipo\": \"Fechado\",\r\n  \"areaM2\": 1300.0\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/habitats/:id",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"habitats",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "d40a07f9-93a2-4a71-9d72-c2a516b5c988"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "excluir",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/habitats/:id",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"habitats",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "d40a07f9-93a2-4a71-9d72-c2a516b5c988"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "tratador",
+			"item": [
+				{
+					"name": "inserir",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"/**\r",
+									" * Gera um número de CPF aleatório e matematicamente válido.\r",
+									" */\r",
+									"function gerarCPF() {\r",
+									"    let n = []; // Array para os 9 primeiros dígitos\r",
+									"    let n10, n11; // Os dois dígitos verificadores\r",
+									"\r",
+									"    // 1. Gera os 9 primeiros dígitos aleatórios\r",
+									"    for (let i = 0; i < 9; i++) {\r",
+									"        n.push(Math.floor(Math.random() * 10));\r",
+									"    }\r",
+									"\r",
+									"    // 2. Calcula o primeiro dígito verificador (n10)\r",
+									"    let soma1 = 0;\r",
+									"    for (let i = 0; i < 9; i++) {\r",
+									"        soma1 += n[i] * (10 - i);\r",
+									"    }\r",
+									"    let resto1 = soma1 % 11;\r",
+									"    n10 = (resto1 < 2) ? 0 : (11 - resto1);\r",
+									"\r",
+									"    // 3. Calcula o segundo dígito verificador (n11)\r",
+									"    let soma2 = 0;\r",
+									"    for (let i = 0; i < 9; i++) {\r",
+									"        soma2 += n[i] * (11 - i);\r",
+									"    }\r",
+									"    soma2 += n10 * 2; // Adiciona o primeiro dígito verificado\r",
+									"    \r",
+									"    let resto2 = soma2 % 11;\r",
+									"    n11 = (resto2 < 2) ? 0 : (11 - resto2);\r",
+									"\r",
+									"    // 4. Concatena tudo em uma string\r",
+									"    let cpf = n.join('') + n10 + n11;\r",
+									"    \r",
+									"    return cpf;\r",
+									"}\r",
+									"\r",
+									"// Gera o CPF e salva na variável\r",
+									"var cpfValido = gerarCPF();\r",
+									"pm.collectionVariables.set(\"cpf_valido_gerado\", cpfValido);\r",
+									"\r",
+									"// Gera Telefone Celular Brasileiro (11 dígitos)\r",
+									"var ddd = Math.floor(Math.random() * (99 - 11 + 1) + 11).toString();\r",
+									"var numero = \"9\";\r",
+									"for (var i = 0; i < 8; i++) { numero += Math.floor(Math.random() * 10); }\r",
+									"var telefoneCompleto = ddd + numero;\r",
+									"pm.collectionVariables.set(\"telefone_gerado\", telefoneCompleto);"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"nome\": \"{{$randomFullName}}\",\r\n  \"cpf\": \"{{cpf_valido_gerado}}\",\r\n  \"telefone\": \"{{telefone_gerado}}\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/tratadores",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"tratadores"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "buscar",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/tratadores",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"tratadores"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "buscar por ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/tratadores/:id",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"tratadores",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "d5faf68f-2b1a-4f80-bf65-613f1217c02e"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "alterar",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \"nome\": \"Maria Xingu\",\r\n    \"cpf\": \"98888811100\",\r\n    \"telefone\": \"(25) 96666-4568\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/tratadores/:id",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"tratadores",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "99ab2a86-95bb-44bc-9586-f05191e3ac9d"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "excluir",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"nome\": \"Kelly Fernanda Cypas\",\r\n  \"cpf\": \"11001111100\",\r\n  \"telefone\": \"(19) 96688-9988\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/tratadores/f6f35c33-81f4-4678-925a-7125a9369ab7",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"tratadores",
+								"f6f35c33-81f4-4678-925a-7125a9369ab7"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "animal",
+			"item": [
+				{
+					"name": "inserir",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"nome\": \"{{$randomUserName}}\",\r\n  \"sexo\": \"{{$randomWord}}\",\r\n  \"dataNascimento\": \"2004-12-01\",\r\n  \"status\": \"saudável\",\r\n  \"especieId\": \"4b4d2c01-e437-4ba8-8675-4aef41bec3a7\",\r\n  \"habitatId\": \"b64c1472-690e-4df1-b37e-0ba921da1e9f\",\r\n  \"tratadoresIds\": [\"f1927f3b-f59e-485b-8d29-bcc69e14bbdf\"]\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/animais",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"animais"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "buscar",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/animais",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"animais"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "buscar por ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/animais/:id",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"animais",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "52ae3e9f-b587-49da-b2ef-4c0b0bd36a7e"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "alterar",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"nome\": \"Erick Roic\",\r\n  \"sexo\": \"Machinho\",\r\n  \"dataNascimento\": \"1999-01-11\",\r\n  \"status\": \"saudável\",\r\n  \"especieId\": \"cbfaf92e-9fc6-4edc-a5ca-cabacc4b4621\",\r\n  \"habitatId\": \"12451fc2-921b-4808-bb37-25fd49863be9\",\r\n  \"tratadoresIds\": [\"68ed0358-33d2-4237-bada-909e15fe3695\"]\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/animais/:id",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"animais",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "52ae3e9f-b587-49da-b2ef-4c0b0bd36a7e"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "excluir",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/animais/4dde3e94-1f2c-4768-a3ae-eede7bc74a00",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"animais",
+								"4dde3e94-1f2c-4768-a3ae-eede7bc74a00"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "contarAnimalPorEspecie",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"nome\": \"Simba\",\r\n  \"sexo\": \"Macho\",\r\n  \"dataNascimento\": \"2018-03-12\",\r\n  \"status\": \"saudável\",\r\n  \"especieId\": \"704716e3-efc6-49df-a114-bc5a9d425734\",\r\n  \"habitatId\": \"6a5395bb-fab3-47b0-9fa8-ffa93e5a001a\",\r\n  \"tratadoresIds\": [\"eacfaeac-d541-4014-bd52-f8a561b30fee\"]\r\n}\r\n"
+						},
+						"url": {
+							"raw": "localhost:8080/api/animais/estatisticas/por-especie",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"animais",
+								"estatisticas",
+								"por-especie"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "pesquisaMultiplosCritérios",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/animais?nome=Joaninha&habitat=Brasileiro&status=saudavel\n",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"animais"
+							],
+							"query": [
+								{
+									"key": "nome",
+									"value": "Joaninha"
+								},
+								{
+									"key": "habitat",
+									"value": "Brasileiro"
+								},
+								{
+									"key": "status",
+									"value": "saudavel\n"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Alimentação",
+			"item": [
+				{
+					"name": "inserir",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"animalId\": \"0b090653-658e-4665-aa95-49ab48dc1bdc\",\r\n  \"tratadorId\": \"f1927f3b-f59e-485b-8d29-bcc69e14bbdf\",\r\n  \"data\": \"2025-12-01\",\r\n  \"tipoRacao\": \"Franguinho\",\r\n  \"quantidadeKg\": 25.0,\r\n  \"horario\": \"2025-10-09T12:00:00\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/alimentacoes",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"alimentacoes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "buscar",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/alimentacoes",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"alimentacoes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "buscar por ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/alimentacoes/:id",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"alimentacoes",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "0b090653-658e-4665-aa95-49ab48dc1bdc"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "alterar",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"animalId\": \"636b46fe-874e-4686-ad2c-6d22abb9ec9b\",\r\n  \"tratadorId\": \"68ed0358-33d2-4237-bada-909e15fe3695\",\r\n  \"data\": \"2026-12-01\",\r\n  \"tipoRacao\": \"Carne bovina\",\r\n  \"quantidadeKg\": 50.0,\r\n  \"horario\": \"2025-11-09T12:00:00\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/alimentacoes/636b46fe-874e-4686-ad2c-6d22abb9ec9b/68ed0358-33d2-4237-bada-909e15fe3695/2026-12-01",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"alimentacoes",
+								"636b46fe-874e-4686-ad2c-6d22abb9ec9b",
+								"68ed0358-33d2-4237-bada-909e15fe3695",
+								"2026-12-01"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "excluir",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/alimentacoes/9fed07cf-0996-4791-b38c-3fa43ef62d1b/3fea27f2-2403-41bc-aaef-a9782cb81af1/2026-12-01",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"alimentacoes",
+								"9fed07cf-0996-4791-b38c-3fa43ef62d1b",
+								"3fea27f2-2403-41bc-aaef-a9782cb81af1",
+								"2026-12-01"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "calcMediaQuant",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/alimentacoes/estatisticas/media-quantidade",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"alimentacoes",
+								"estatisticas",
+								"media-quantidade"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Cuidador Habitat",
+			"item": [
+				{
+					"name": "inserir",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"tratadorId\": \"d5faf68f-2b1a-4f80-bf65-613f1217c02e\",\r\n  \"habitatId\": \"d40a07f9-93a2-4a71-9d72-c2a516b5c988\",\r\n  \"turno\": \"Manhã\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/cuidadores-habitats",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"cuidadores-habitats"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "buscar",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/cuidadores-habitats",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"cuidadores-habitats"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "buscar por ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/cuidadores-habitats/:id",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"cuidadores-habitats",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "96219637-5aef-4fa6-a895-7bee330de3b7"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "alterar",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/cuidadores-habitats/787d597f-68f7-4f21-8e77-31c9612de71b/d807ac89-453c-4d83-922d-80211f5d2692/Manhã",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"cuidadores-habitats",
+								"787d597f-68f7-4f21-8e77-31c9612de71b",
+								"d807ac89-453c-4d83-922d-80211f5d2692",
+								"Manhã"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "excluir",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/cuidadores-habitats/a79da97c-d248-4345-98c8-426e56f24dcd",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"cuidadores-habitats",
+								"a79da97c-d248-4345-98c8-426e56f24dcd"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "veterinario",
+			"item": [
+				{
+					"name": "inserir",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"nome\": \"Dra. Teste\",\r\n  \"crm\": \"VET00000\",\r\n  \"especialidade\": \"Cirurgia\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/veterinarios",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"veterinarios"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "buscar",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/veterinarios",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"veterinarios"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "buscar por ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/veterinarios/8e7a80a9-19b9-4021-98d0-81459c801305",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"veterinarios",
+								"8e7a80a9-19b9-4021-98d0-81459c801305"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "alterar",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"nome\": \"Dr. Vagner Vieira B\",\r\n  \"crmv\": \"SP98700\",\r\n  \"especialidade\": \"Grande Porte\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/veterinarios/4240797c-41b8-4641-a5d7-b4875fe6fa91",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"veterinarios",
+								"4240797c-41b8-4641-a5d7-b4875fe6fa91"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "excluir",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"nome\": \"Dra. Helena Prado\",\r\n  \"crm\": \"VET12345\",\r\n  \"especialidade\": \"Mamíferos Selvagens\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/veterinarios/cb6db88e-0484-4d74-b0ef-cb0d76ebb550",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"veterinarios",
+								"cb6db88e-0484-4d74-b0ef-cb0d76ebb550"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "consulta",
+			"item": [
+				{
+					"name": "inserir",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"animalId\": \"c9ce64e6-3e2b-4822-965b-f8987eb660fc\",\r\n  \"veterinarioId\": \"22ff931b-7a25-4bf9-ae68-698f247b78c8\",\r\n  \"dataConsulta\": \"2025-11-13\",\r\n  \"diagnostico\": \"teste leve nas patas\",\r\n  \"tratamento\": \"teste por 7 dias\",\r\n  \"observacoes\": \"teste ferimento\",\r\n  \"urgente\": false\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/consultas",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"consultas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "buscar",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"animalId\": \"UUID_DO_ANIMAL\",\r\n  \"veterinarioId\": \"UUID_DO_VETERINARIO\",\r\n  \"dataConsulta\": \"2025-11-10\",\r\n  \"diagnostico\": \"Infecção leve nas patas\",\r\n  \"tratamento\": \"Antibiótico por 7 dias\",\r\n  \"observacoes\": \"Animal apresentou melhora após limpeza do ferimento\"\r\n}\r\n"
+						},
+						"url": {
+							"raw": "localhost:8080/api/consultas",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"consultas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "buscar por ID",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"animalId\": \"UUID_DO_ANIMAL\",\r\n  \"veterinarioId\": \"UUID_DO_VETERINARIO\",\r\n  \"dataConsulta\": \"2025-11-10\",\r\n  \"diagnostico\": \"Infecção leve nas patas\",\r\n  \"tratamento\": \"Antibiótico por 7 dias\",\r\n  \"observacoes\": \"Animal apresentou melhora após limpeza do ferimento\"\r\n}\r\n"
+						},
+						"url": {
+							"raw": "localhost:8080/api/consultas/00bb0341-9a3b-4809-8ac6-f70eb1e9d23b",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"consultas",
+								"00bb0341-9a3b-4809-8ac6-f70eb1e9d23b"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "alterar",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"animalId\": \"UUID_DO_ANIMAL\",\r\n  \"veterinarioId\": \"UUID_DO_VETERINARIO\",\r\n  \"dataConsulta\": \"2025-11-10\",\r\n  \"diagnostico\": \"Infecção leve nas patas\",\r\n  \"tratamento\": \"Antibiótico por 7 dias\",\r\n  \"observacoes\": \"Animal apresentou melhora após limpeza do ferimento\"\r\n}\r\n"
+						},
+						"url": {
+							"raw": "localhost:8080/api/consultas/220857e8-c3d9-402a-8482-5ee728e8f458",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"consultas",
+								"220857e8-c3d9-402a-8482-5ee728e8f458"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "excluir",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"animalId\": \"UUID_DO_ANIMAL\",\r\n  \"veterinarioId\": \"UUID_DO_VETERINARIO\",\r\n  \"dataConsulta\": \"2025-11-10\",\r\n  \"diagnostico\": \"Infecção leve nas patas\",\r\n  \"tratamento\": \"Antibiótico por 7 dias\",\r\n  \"observacoes\": \"Animal apresentou melhora após limpeza do ferimento\"\r\n}\r\n"
+						},
+						"url": {
+							"raw": "localhost:8080/api/consultas/220857e8-c3d9-402a-8482-5ee728e8f458",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"consultas",
+								"220857e8-c3d9-402a-8482-5ee728e8f458"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "buscaComposta",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/consultas/busca-composta?especialidade=Mamíferos Selvagens&urgente=true&dataMin=2025-11-10",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"consultas",
+								"busca-composta"
+							],
+							"query": [
+								{
+									"key": "especialidade",
+									"value": "Mamíferos Selvagens"
+								},
+								{
+									"key": "urgente",
+									"value": "true"
+								},
+								{
+									"key": "dataMin",
+									"value": "2025-11-10"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "evento",
+			"item": [
+				{
+					"name": "inserir",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"titulo\": \"Dia de dedada e soco no cu\",\r\n  \"descricao\": \"Atividades e brincadeiras gostosas e lubrificante.\",\r\n  \"data\": \"2025-11-18T09:00:00\",\r\n  \"capacidade\": 100\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/eventos",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"eventos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "buscar",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/eventos",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"eventos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "buscar por ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/eventos/:id",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"eventos",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "b94330a2-4953-4a64-b967-b506a84fac03"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "alterar",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"titulo\": \"Novembro Azul x\",\r\n  \"descricao\": \"Mês da dedada x\",\r\n  \"data\": \"2027-10-12T09:00:00\",\r\n  \"capacidade\": 19500\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/eventos/:id",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"eventos",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "8353a3b6-e24d-4150-96ba-57bb91fb94d6"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "excluir",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"titulo\": \"Novembro Azul x\",\r\n  \"descricao\": \"Mês da dedada x\",\r\n  \"data\": \"2025-10-12T09:00:00\",\r\n  \"capacidade\": 1500\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/eventos/:id",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"eventos",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "b94330a2-4953-4a64-b967-b506a84fac03"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "vender-Bilhete",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"eventoId\": \"8353a3b6-e24d-4150-96ba-57bb91fb94d6\",\r\n    \"comprador\": \"Yasmin Guimaraes\",\r\n    \"valor\": 100.50\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/eventos/vender-bilhete",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"eventos",
+								"vender-bilhete"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "bilhetes",
+			"item": [
+				{
+					"name": "inserir",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"comprador\": \"João da Silva\",\r\n  \"dataCompra\": \"2025-11-09T10:30:00\",\r\n  \"valor\": 100.50,\r\n  \"eventoId\": \"c93fef5e-b98a-4c14-b8a2-85fc3e1b8801\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/bilhetes",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"bilhetes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "buscar",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/bilhetes",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"bilhetes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "buscar por ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/bilhetes/29fc8f4a-370f-466a-932b-9722ea1c7358",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"bilhetes",
+								"29fc8f4a-370f-466a-932b-9722ea1c7358"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "alterar",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"comprador\": \"Zezinha Maria\",\r\n  \"dataCompra\": \"2025-09-09T10:30:00\",\r\n  \"valor\": 10.00,\r\n  \"eventoId\": \"21c974f2-6fb5-4f5a-a64b-f94cb285b567\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/bilhetes/3073d7d5-af32-465c-874c-90dea497f642",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"bilhetes",
+								"3073d7d5-af32-465c-874c-90dea497f642"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "excluir",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"comprador\": \"Marques\",\r\n  \"dataCompra\": \"2025-12-09T10:30:00\",\r\n  \"valor\": 150.00,\r\n  \"eventoId\": \"e837db32-2a3a-429f-9e0e-547e7fcc6da7\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/bilhetes/3073d7d5-af32-465c-874c-90dea497f642",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"bilhetes",
+								"3073d7d5-af32-465c-874c-90dea497f642"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "totalBilhetePorEvento",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/bilhetes//estatisticas/total-por-evento",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"bilhetes",
+								"",
+								"estatisticas",
+								"total-por-evento"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Relatório",
+			"item": [
+				{
+					"name": "numeroDeConsultas",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/relatorios/consultas-por-especie",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"relatorios",
+								"consultas-por-especie"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "AuthLogin",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"adm@gmail.com\", \r\n    \"password\": \"adm123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/auth/login",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "cpf_valido_gerado",
+			"value": ""
+		},
+		{
+			"key": "telefone_gerado",
+			"value": ""
+		}
+	]
+}

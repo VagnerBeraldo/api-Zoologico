@@ -84,15 +84,30 @@ class UsuarioServiceTest {
     void saveUser_shouldCreateUser() {
         UsuarioDTO dto = new UsuarioDTO("Erick", "erick@test.com", "123");
 
+        // Mocka consulta de email
         when(repository.findByEmail(dto.email())).thenReturn(Optional.empty());
-        when(passwordEncoderConfig.bCryptPasswordEncoder()).thenReturn((BCryptPasswordEncoder) encoder);
-        when(encoder.encode(dto.senha())).thenReturn("hashed");
+
+        // Mocka o BCrypt real retornado pelo config
+        BCryptPasswordEncoder bCrypt = mock(BCryptPasswordEncoder.class);
+        when(passwordEncoderConfig.bCryptPasswordEncoder()).thenReturn(bCrypt);
+
+        // Mocka o encode do Spring PasswordEncoder
+        when(bCrypt.encode(dto.senha())).thenReturn("hashed");
+
+        // Mocka a entidade salva
+        Usuario usuario = new Usuario();
+        UUID id = UUID.randomUUID();
+        usuario.setId(id);
+
         when(repository.save(any())).thenReturn(usuario);
 
+        // Executa
         UUID result = service.saveUser(dto);
 
+        // Asserts
         assertEquals(id, result);
         verify(repository).save(any(Usuario.class));
+        verify(bCrypt).encode("123");
     }
 
     @Test

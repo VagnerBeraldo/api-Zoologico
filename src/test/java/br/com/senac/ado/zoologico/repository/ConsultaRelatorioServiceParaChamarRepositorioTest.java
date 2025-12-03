@@ -41,7 +41,7 @@ class ConsultaRelatorioServiceParaChamarRepositorioTest {
         when(repository.contarConsultasProdutividade()).thenReturn(dadosSimulados);
 
         // ACT
-        List<Map<String, Object>> resultado = service.consultasPorEspecie();
+        List<Map<String, Object>> resultado = service.consultasProdutividade();
 
         // ASSERT
 

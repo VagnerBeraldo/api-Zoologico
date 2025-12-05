@@ -19,7 +19,7 @@ public class ConsultaRelatorioController {
         this.service = service;
     }
 
-    @GetMapping("/consultas-por-especie")
+    @GetMapping("/consultas-produtividade")
     public ResponseEntity<List<Map<String, Object>>> consultasProtutividade() {
         return ResponseEntity.ok(service.consultasProdutividade());
     }
